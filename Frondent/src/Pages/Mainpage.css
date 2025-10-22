@@ -1,0 +1,58 @@
+
+
+
+/* Container */
+.Mainpage-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.Mainpage-container h1 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #1f2937; /* dark gray */
+}
+
+/* Content grid */
+.Mainpage-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+/* Each module card */
+.Main-inner-content {
+  background: linear-gradient(135deg, #4f46e5, #6366f1); /* gradient blue-purple */
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 10px 10px;
+  /* border-radius: 10px; */
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+a{
+    text-decoration:none;
+}
+
+/* Hover effect */
+.Main-inner-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+@media (max-width: 600px) {
+  .Main-inner-content {
+    padding: 25px 5px;
+    font-size: 1rem;
+  }
+}
