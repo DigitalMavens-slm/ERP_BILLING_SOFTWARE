@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAppLocation } from "../Context/LocationContext";
+import { ExportExcel } from "../Utills/ExportExcel";
+import { ImportExcel } from "../Utills/ImportExcel";
 const API_URL=import.meta.env.VITE_API_URL
+
+
 console.log(API_URL)
 
 const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
@@ -18,7 +22,7 @@ const initialAddress = {
 
 export default function SupplierForm() {
   const {location,Goback} = useAppLocation();
-console.log(location)
+// console.log(location)
   const [supplier, setSupplier] = useState({
     name: "",
     phone: "",
@@ -32,6 +36,7 @@ console.log(location)
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [file,setFile]=useState("");
 
   const handleChange = (path) => (e) => {
     const value = e.target.value;
@@ -316,6 +321,26 @@ console.log(location)
           </div>
         </form>
       )}
+
+      <div style={{ marginTop: "20px" }}>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            await ImportExcel("Supplier", file);
+            // fetchBrands(); 
+          }}
+        >
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            accept=".xlsx, .xls"
+          />
+          <button type="submit" disabled={!file}>
+            Import Excel
+          </button>
+        </form>
+      </div>
+      <button onClick={()=>ExportExcel("Supplier")}>Export</button>
     </>
   );
 }

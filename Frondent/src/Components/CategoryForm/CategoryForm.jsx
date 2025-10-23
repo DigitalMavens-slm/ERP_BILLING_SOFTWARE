@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppLocation } from "../../Context/LocationContext";
+import { ImportExcel } from "../../Utills/ImportExcel";
+import { ExportExcel } from "../../Utills/ExportExcel";
+// import { AllModelExportExcel } from "../../../../Backend/Utills/AllModelExportExcel";
 
 const API_URL=import.meta.env.VITE_API_URL
 
@@ -12,7 +15,7 @@ export default function CategoryForm() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
+  const [file,setFile]=useState("")
   // GET categories
   const fetchCategories = async () => {
     try {
@@ -87,6 +90,32 @@ export default function CategoryForm() {
           </ul>
         </div>
       )}
+
+<div style={{ marginTop: "20px" }}>
+  <form
+    onSubmit={async (e) => {
+      e.preventDefault();
+      await ImportExcel("Category", file);
+      fetchCategories(); 
+    }}
+  >
+    <input
+      type="file"
+      onChange={(e) => setFile(e.target.files[0])}
+      accept=".xlsx, .xls"
+    />
+    <button type="submit" disabled={!file}>
+      Import Excel
+    </button>
+  </form>
+</div>
+
+
+
+<button onClick={ () => ExportExcel("Category") }>Export Excel</button>
+{/* <button onClick={ () => AllModelExportExcel("Category") }>Export Excel</button> */}
+
+
     </>
   );
 }

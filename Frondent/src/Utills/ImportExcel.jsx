@@ -3,11 +3,16 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 export const ImportExcel = async (moduleName, file) => {
+  // console.log(moduleName);
+  // console.log(file);
+  
+  
   try {
     if (!file) {
       alert("Please select an Excel file");
       return;
     }
+
    else{
     const formData = new FormData();
     formData.append("file", file);

@@ -111,9 +111,6 @@ export default function BrandForm() {
 
 
 
-
-
-
 {/* <button onClick={() => window.open(`${API_URL}/api/brands/export/excel`)}>Export Excel</button> */}
 <button onClick={ () => ExportExcel("Brand") }>Export Excel</button>
 {/* <button onClick={()=> ImportExcel("Brand",file) }>Import Excel</button> */}

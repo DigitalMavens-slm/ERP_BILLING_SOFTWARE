@@ -1,6 +1,7 @@
 // Supplier.js
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+// import { ExportExcel } from "../../Utills/ExportExcel";
 
 const Supplier = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -37,6 +38,7 @@ const Supplier = () => {
   };
 
   return (
+    <>
     <div style={{ padding: "20px" }}>
       <h1>Suppliers</h1>
 
@@ -73,6 +75,9 @@ const Supplier = () => {
         </tbody>
       </table>
     </div>
+   {/* <button onclick={()=>ExportExcel("Customer")}>Export</button> */}
+
+</>
   );
 };
 

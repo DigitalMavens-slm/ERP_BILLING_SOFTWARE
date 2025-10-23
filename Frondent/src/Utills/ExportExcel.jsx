@@ -3,6 +3,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const ExportExcel = async (moduleName) => {
+  console.log(moduleName)
   try {
     const res = await axios.get(`${API_URL}/api/export/${moduleName}/export/excel`, {
       responseType: "blob", // important for file download

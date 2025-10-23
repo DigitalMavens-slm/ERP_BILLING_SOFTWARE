@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAppLocation} from "../../Context/LocationContext";
+import {ExportExcel} from "../../Utills/ExportExcel"
+import { ImportExcel } from "../../Utills/ImportExcel";
+
 const API_URL=import.meta.env.VITE_API_URL
 
 
@@ -32,6 +35,7 @@ export default function CustomerForm() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [file,setFile]=useState("")
 
   const handleChange = (path) => (e) => {
     const value = e.target.value;
@@ -334,6 +338,28 @@ export default function CustomerForm() {
           </form>
         </div>
       )}
+
+
+      <div style={{ marginTop: "20px" }}>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            await ImportExcel("Brand", file);
+            // fetchBrands(); 
+          }}
+        >
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            accept=".xlsx, .xls"
+          />
+          <button type="submit" disabled={!file}>
+            Import Excel
+          </button>
+        </form>
+      </div>
+
+      <button onClick={()=>ExportExcel("Customer")}>Export</button>
     </>
   );
 }

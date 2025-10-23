@@ -55,10 +55,14 @@ app.use("/api",SubCategoryRoutes)
 app.use("/api",require("./Routes/CategoryRoutes"))
 app.use("/api",BrandRoutes)
 app.use("/api",ProductFormRoutes)
-// app.use("/api",CompanySetting)
 app.use('/api', CompanySetting);
 
+        // Export   and  import  Excel Route
 app.use("/api",require("./Routes/BrandRoutes"))
+app.use("/api",require("./Routes/CategoryRoutes"))
+app.use("/api",require("./Routes/SupplierRouts"))
+app.use("/api",require("./Routes/CustomerRoutes"))
+
 
 
 app.listen(process.env.PORT,()=>{
