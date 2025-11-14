@@ -1,66 +1,238 @@
-const Sales = require("../Model/SalesModel");
+const Sales = require("../Model/InvoiceModel/InvoiceCreateModel");
 const Purchase = require("../Model/PurchaseModel");
-const Inventory = require("../Model/InventoryModel");
-const Finance = require("../Model/FinanceModel");
+const Payment = require("../Model/PaymentModel");
+const PurchasePayment=require("../Model/PurchasePaymentModel")
 
-// 🧾 SALES SUMMARY
-exports.getSalesSummary = async (req, res) => {
-  try {
-    const sales = await Sales.find();
-    const totalSales = sales.reduce((sum, s) => sum + s.price * s.quantity, 0);
-    const totalOrders = sales.length;
-    res.json({ totalSales, totalOrders });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+const formatDate = (date) => date.toISOString().split("T")[0];
 
-// 🧾 PURCHASE SUMMARY
-exports.getPurchaseSummary = async (req, res) => {
+exports.getReports = async (req, res) => {
   try {
-    const purchases = await Purchase.find();
-    const totalPurchase = purchases.reduce(
-      (sum, p) => sum + p.price * p.quantity,
-      0
+    const { from, to, type = "sales", party = "all" } = req.query;
+
+    const dateFilter = {};
+    if (from && to) {
+      dateFilter.date = { $gte: from, $lte: to };
+    }
+
+    // 🟦 KPIs (same for all types)
+    const totalSalesAgg = await Sales.aggregate([
+      { $match: dateFilter },
+      { $group: { _id: null, total: { $sum: "$subtotal" } } },
+    ]);
+    const totalSales = totalSalesAgg[0]?.total || 0;
+
+    const totalPurchasesAgg = await Purchase.aggregate([
+      { $match: dateFilter },
+      { $group: { _id: null, total: { $sum: "$subtotal" } } },
+    ]);
+    const totalPurchases = totalPurchasesAgg[0]?.total || 0;
+
+    const paymentAgg = await Payment.aggregate([
+      { $match: dateFilter },
+      { $group: { _id: "$type", total: { $sum: "$amount" } } },
+    ]);
+
+    let inflow = 0,
+      outflow = 0;
+    paymentAgg.forEach((p) => {
+      if (p._id === "inflow") inflow = p.total;
+      if (p._id === "outflow") outflow = p.total;
+    });
+    let netCash = inflow - outflow;
+
+    // 🟦 TYPE BASED RESPONSE
+    let chart = [];
+    let records = [];
+
+    // 🟩 SALES
+    if (type === "sales") {
+      chart = await Sales.aggregate([
+        { $match: dateFilter },
+        { $addFields: { parsedDate: { $toDate: "$date" } } },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%Y-%m-%d", date: "$parsedDate" } },
+            value: { $sum: "$subtotal" },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]).then((d) => d.map((x) => ({ date: x._id, value: x.value })));
+
+      records = await Sales.find(dateFilter)
+        .select("date reference customer subtotal")
+        .sort({ date: -1 })
+        .then((r) =>
+          r.map((x) => ({
+            _id: x._id,
+            date: formatDate(new Date(x.date)),
+            reference: x.reference,
+            party: x.customer,
+            type: "Sale",
+            amount: x.subtotal,
+          }))
+        );
+    }
+
+    // 🟨 PURCHASES
+    if (type === "purchases") {
+      chart = await Purchase.aggregate([
+        { $match: dateFilter },
+        { $addFields: { parsedDate: { $toDate: "$date" } } },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%Y-%m-%d", date: "$parsedDate" } },
+            value: { $sum: "$subtotal" },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]).then((d) => d.map((x) => ({ date: x._id, value: x.value })));
+
+      records = await Purchase.find(dateFilter)
+        .select("date reference vendor subtotal")
+        .sort({ date: -1 })
+        .then((r) =>
+          r.map((x) => ({
+            _id: x._id,
+            date: formatDate(new Date(x.date)),
+            reference: x.reference,
+            party: x.vendor,
+            type: "Purchase",
+            amount: x.subtotal,
+          }))
+        );
+    }
+
+
+
+  // 🟧 CASHFLOW (CUSTOMER + SUPPLIER)
+if (type === "cashflow") {
+
+  // -----------------------------
+  // 1. CUSTOMER INFLOW + OUTFLOW
+  // -----------------------------
+  const customerCash = await Payment.aggregate([
+    { $match: dateFilter },
+    {
+      $addFields: {
+        parsedDate: { $toDate: "$date" },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$parsedDate" } },
+          type: "$type",
+        },
+        value: { $sum: "$amount" },
+      },
+    },
+    { $sort: { "_id.date": 1 } },
+  ]);
+
+  // -----------------------------
+  // 2. SUPPLIER OUTFLOW (Purchase Payment)
+  // -----------------------------
+  const supplierCash = await PurchasePayment.aggregate([
+    { $match: dateFilter },
+    {
+      $addFields: {
+        parsedDate: { $toDate: "$date" },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$parsedDate" } },
+          type: "supplier_outflow",
+        },
+        value: { $sum: "$amount" },
+      },
+    },
+    { $sort: { "_id.date": 1 } },
+  ]);
+
+  // -----------------------------
+  // 3. MERGE BOTH (Customer + Supplier)
+  // -----------------------------
+  const combined = [...customerCash, ...supplierCash];
+
+  chart = combined.map((x) => ({
+    date: x._id.date,
+    type: x._id.type,
+    value: x.value,
+  }));
+
+  // ---------------------------------------------
+  // 4. BUILD RECORDS TABLE (Customer + Supplier)
+  // ---------------------------------------------
+  const customerRecords = await Payment.find(dateFilter)
+    .select("date reference type amount")
+    .sort({ date: -1 })
+    .then((r) =>
+      r.map((x) => ({
+        _id: x._id,
+        date: formatDate(new Date(x.date)),
+        reference: x.reference,
+        party: x.type === "inflow" ? "Customer Paid" : "Customer Refund",
+        type: x.type,
+        amount: x.amount,
+      }))
     );
-    const totalOrders = purchases.length;
-    res.json({ totalPurchase, totalOrders });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
-// 🧾 INVENTORY SUMMARY
-exports.getInventorySummary = async (req, res) => {
-  try {
-    const items = await Inventory.find();
-    const totalStock = items.reduce((sum, item) => sum + item.quantity, 0);
-    const lowStock = items.filter(
-      (item) => item.quantity <= item.minStock
-    ).length;
-    res.json({ totalStock, lowStock });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  const supplierRecords = await PurchasePayment.find(dateFilter)
+    .select("date vendor amount")
+    .sort({ date: -1 })
+    .then((r) =>
+      r.map((x) => ({
+        _id: x._id,
+        date: formatDate(new Date(x.date)),
+        reference: "Supplier Payment",
+        party: x.vendor,
+        type: "supplier_outflow",
+        amount: x.amount,
+      }))
+    );
 
-// 🧾 FINANCE SUMMARY
-exports.getFinanceSummary = async (req, res) => {
-  try {
-    const records = await Finance.find();
+  // Merge both records
+  records = [...customerRecords, ...supplierRecords];
 
-    const totalRevenue = records
-      .filter((r) => r.type === "Invoice" || r.type === "Payment")
-      .reduce((sum, r) => sum + r.amount, 0);
 
-    const totalExpenses = records
-      .filter((r) => r.type === "Expense")
-      .reduce((sum, r) => sum + r.amount, 0);
+  let customerInflow = 0;
+  let customerOutflow = 0;
+  let supplierOutflow = 0;
 
-    const netProfit = totalRevenue - totalExpenses;
+  customerCash.forEach((c) => {
+    if (c._id.type === "inflow") customerInflow += c.value;
+    if (c._id.type === "outflow") customerOutflow += c.value;
+  });
 
-    res.json({ totalRevenue, totalExpenses, netProfit });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  supplierCash.forEach((s) => {
+    supplierOutflow += s.value;
+  });
+
+  // Final net cashflow
+  netCash = customerInflow - (customerOutflow + supplierOutflow);
+
+
+}
+
+ 
+
+
+
+
+    res.json({
+      kpis: {
+        totalSales,
+        totalPurchases,
+        netCash,
+        invoices: records.length,
+      },
+      chart,
+      records,
+    });
+  } catch (err) {
+    console.error("Error in ReportsController:", err);
+    res.status(500).json({ message: "Server Error" });
   }
 };

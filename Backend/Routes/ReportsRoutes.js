@@ -1,16 +1,20 @@
+// const express = require("express");
+// const router = express.Router();
+// const {getPaymentSummary} = require("../Controller/ReportsController");
+//   // getCompareReport,
+
+// // router.get("/reports/compare", getCompareReport);
+// router.get("/reports/payment-summary", getPaymentSummary);
+
+// module.exports = router;
+
+
 const express = require("express");
+const { getReports } = require("../Controller/ReportsController");
 const router = express.Router();
-const {
-  getSalesSummary,
-  getPurchaseSummary,
-  getInventorySummary,
-  getFinanceSummary,
-} = require("../Controller/ReportsController");
 
-
-router.get("/reports/sales-summary", getSalesSummary);
-router.get("/reports/purchase-summary", getPurchaseSummary);
-router.get("/reports/inventory-summary", getInventorySummary);
-router.get("/reports/finance-summary", getFinanceSummary);
+// GET /api/reports
+router.get("/reports", getReports);
+router.get("/reports/compare", getReports);
 
 module.exports = router;

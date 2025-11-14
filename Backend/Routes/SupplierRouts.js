@@ -14,7 +14,6 @@ router.delete("/suppliers/:id", deleteSupplier);
 
 
 router.get("/export/:modelname/export/excel",AllModelExportExcel)
-// router.post("/import/:modelname/excel",upload.single,AllModelImportExcel)
 router.post("/import/:modelname/excel", upload.single("file"), AllModelImportExcel);
 
 

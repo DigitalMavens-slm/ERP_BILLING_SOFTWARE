@@ -7,14 +7,15 @@ const Mainpage = () => {
     <div className="Mainpage-container">
         <h1>Digi Voice Software</h1>
             <div className="Mainpage-content">
-             <Link to={"index"}> <div className="Main-inner-content">Purchase</div></Link>  
-             <Link to={"sales"}> <div className="Main-inner-content">Sales</div></Link> 
-             <Link to={"employee"}> <div className="Main-inner-content">Employee  Details</div></Link> 
+             <Link to={"index"}> <div className="Main-inner-content">PURCHASE</div></Link>  
+             <Link to={"invoicecreate"}> <div className="Main-inner-content">INVOICE</div></Link> 
+             {/* <Link to={"employee"}> <div className="Main-inner-content">Employee  Details</div></Link> */}
+              <Link to={"payment-updation"}> <div className="Main-inner-content">PAYMENT-UPDATION</div></Link>  
              <Link to={"inventory"}> <div className="Main-inner-content">Inventory</div></Link>  
-             <Link to={"finance"}> <div className="Main-inner-content">Finance</div></Link>
+             {/* <Link to={"finance"}> <div className="Main-inner-content">Finance</div></Link> */}
              <Link to={"setting"}> <div className="Main-inner-content">Settings</div></Link> 
              <Link to={"reports"}> <div className="Main-inner-content">Reports</div></Link>  
-             <Link to={"management"}> <div className="Main-inner-content">Usermanagement</div></Link>  
+             <Link to={"company"}> <div className="Main-inner-content">Company-Details</div></Link>  
 
           </div>
 

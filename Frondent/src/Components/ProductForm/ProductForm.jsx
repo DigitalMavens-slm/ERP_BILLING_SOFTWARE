@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppLocation } from "../../Context/LocationContext";
 const API_URL=import.meta.env.VITE_API_URL
-
+console.log(API_URL)
 export default function ProductForm() {
   const {location,Goback} = useAppLocation();
   // console.log(location)
@@ -10,7 +10,7 @@ export default function ProductForm() {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
   const [productData, setProductData] = useState({
     name: "",
@@ -26,6 +26,7 @@ export default function ProductForm() {
     commission: "",
     minOrderQty: "",
   });
+  console.log(productData)
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -37,13 +38,13 @@ export default function ProductForm() {
         axios.get(`${API_URL}/api/categories`),
         axios.get(`${API_URL}/api/subcategories`),
         axios.get(`${API_URL}/api/brands`),
-        axios.get(`${API_URL}/api/products`),
+        // axios.get(`${API_URL}/api/products`),
       ]);
       setCategories(catRes.data);
       console.log()
       setSubCategories(subRes.data);
       setBrands(brandRes.data);
-      setProducts(prodRes.data);
+      // setProducts(prodRes.data);
     } catch (err) {
       console.error("Error fetching data:", err);
     }
@@ -110,20 +111,10 @@ export default function ProductForm() {
           <h2>Product Management</h2>
 
           <form onSubmit={handleSubmit} className="product-form">
-            <input
-              name="name"
-              value={productData.name}
-              onChange={handleChange}
-              placeholder="Product Name"
-              required
-            />
 
-            <select
-              name="categoryId"
-              value={productData.categoryId}
-              onChange={handleChange}
-              required
-            >
+            <input name="name" value={productData.name} onChange={handleChange} placeholder="Product Name" required/>
+
+            <select name="categoryId" value={productData.categoryId} onChange={handleChange} required>
               <option value="">Select Category</option>
               {categories.map((c) => (
                 <option key={c._id} value={c._id}>
@@ -132,11 +123,7 @@ export default function ProductForm() {
               ))}
             </select>
 
-            <select
-              name="subCategoryId"
-              value={productData.subCategoryId}
-              onChange={handleChange}
-            >
+            <select name="subCategoryId" value={productData.subCategoryId} onChange={handleChange}>
               <option value="">Select Sub-Category</option>
               {subCategories
                 .filter((s) => s.categoryId.toString() === productData.categoryId)
@@ -147,11 +134,7 @@ export default function ProductForm() {
                 ))}
             </select>
 
-            <select
-              name="brandId"
-              value={productData.brandId}
-              onChange={handleChange}
-            >
+            <select name="brandId" value={productData.brandId} onChange={handleChange}>
               <option value="">Select Brand</option>
               {brands.map((b) => (
                 <option key={b._id} value={b._id}>
@@ -160,60 +143,14 @@ export default function ProductForm() {
               ))}
             </select>
 
-            <input
-              name="mrp"
-              type="number"
-              value={productData.mrp}
-              onChange={handleChange}
-              placeholder="MRP"
-            />
-            <input
-              name="purchaseRate"
-              type="number"
-              value={productData.purchaseRate}
-              onChange={handleChange}
-              placeholder="Purchase Rate"
-            />
-            <input
-              name="saleRate"
-              type="number"
-              value={productData.saleRate}
-              onChange={handleChange}
-              placeholder="Sale Rate"
-            />
-            <input
-              name="gst"
-              type="number"
-              value={productData.gst}
-              onChange={handleChange}
-              placeholder="GST %"
-            />
-            <input
-              name="barcode"
-              value={productData.barcode}
-              onChange={handleChange}
-              placeholder="Barcode"
-            />
-            <input
-              name="unit"
-              value={productData.unit}
-              onChange={handleChange}
-              placeholder="Unit (e.g. pcs, box)"
-            />
-            <input
-              name="commission"
-              type="number"
-              value={productData.commission}
-              onChange={handleChange}
-              placeholder="Commission %"
-            />
-            <input
-              name="minOrderQty"
-              type="number"
-              value={productData.minOrderQty}
-              onChange={handleChange}
-              placeholder="Min Order Quantity"
-            />
+            <input name="mrp" type="number" value={productData.mrp} onChange={handleChange} placeholder="MRP"/>
+            <input  name="purchaseRate" type="number" value={productData.purchaseRate} onChange={handleChange} placeholder="Purchase Rate"/>
+            <input name="saleRate" type="number" value={productData.saleRate} onChange={handleChange} placeholder="Sale Rate"/>
+            <input name="gst" type="number" value={productData.gst} onChange={handleChange} placeholder="GST %"/>
+            <input name="barcode" value={productData.barcode} onChange={handleChange} placeholder="Barcode"/>
+            <input  name="unit"  value={productData.unit} onChange={handleChange} placeholder="Unit (e.g. pcs, box)"/>
+            <input name="commission" type="number" value={productData.commission} onChange={handleChange} placeholder="Commission %"/>
+            <input name="minOrderQty" type="number" value={productData.minOrderQty} onChange={handleChange} placeholder="Min Order Quantity"/>
 
             <button type="submit" disabled={loading}>
               {loading ? "Saving..." : "Add Product"}
@@ -223,13 +160,13 @@ export default function ProductForm() {
           {message && <div>{message}</div>}
 
           <ul>
-            {products.map((p) => (
+            {/* {products.map((p) => (
               <li key={p._id}>
                 {p.name} — ₹{p.saleRate}  
                 ({brands.find((b) => b._id === p.brandId)?.name || "No Brand"})
                 <button onClick={() => handleDelete(p._id)}>Delete</button>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
        )} 

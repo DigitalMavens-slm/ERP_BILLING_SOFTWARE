@@ -7,7 +7,7 @@ exports.getProducts = async (req, res) => {
       .populate("categoryId", "name")
       .populate("subCategoryId", "name");
     res.json(data);
-    console.log(data)
+    // console.log(data)
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

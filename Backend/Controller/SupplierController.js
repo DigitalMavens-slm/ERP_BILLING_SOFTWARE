@@ -7,7 +7,7 @@ exports.addSupplier = async (req, res) => {
     const supplier = new Supplier(req.body);
     await supplier.save();
     res.status(201).json({ message: "Supplier created", supplier });
-    console.log(supplier);
+    // console.log(supplier);
     
   } catch (err) {
     res.status(500).json({ message: err.message });

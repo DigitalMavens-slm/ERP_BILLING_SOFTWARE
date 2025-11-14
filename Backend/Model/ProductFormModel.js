@@ -15,4 +15,5 @@ const productSchema = new mongoose.Schema({
   minOrderQty: Number,
 });
 
+
 module.exports = mongoose.model("Product", productSchema);
