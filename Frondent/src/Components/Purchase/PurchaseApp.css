@@ -1,210 +1,6 @@
-/* .purchase-app {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  font-family: "Inter", sans-serif;
-  color: #333;
-}
-
-.purchase-header {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.purchase-field {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 200px;
-}
-
-.purchase-field label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #444;
-}
-
-.purchase-field input,
-.purchase-field select {
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.purchase-field input:focus,
-.purchase-field select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
-}
-
-.purchase-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 25px;
-}
-
-.suggestion-box {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 999;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.suggestion-box li {
-  padding: 8px 10px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.suggestion-box li:hover {
-  background-color: #f0f8ff;
-}
-
-.purchase-item-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.purchase-item-row input,
-.purchase-item-row select {
-  padding: 8px;
-  width: 100px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-}
-
-.purchase-item-row button {
-  padding: 8px 14px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.purchase-item-row button:hover {
-  background-color: #0056b3;
-}
-
-.table-container {
-  overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.purchase-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.purchase-table th,
-.purchase-table td {
-  text-align: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.purchase-table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-}
-
-.purchase-table tr:hover {
-  background-color: #f6fbff;
-}
-
-.purchase-table button {
-  padding: 6px 10px;
-  background: #dc3545;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.purchase-table button:hover {
-  background: #b71c1c;
-}
-
-.purchase-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  font-size: 15px;
-  margin-top: 20px;
-  border-top: 1px solid #ddd;
-  padding-top: 15px;
-}
-
-.purchase-footer .payable {
-  color: #007bff;
-  font-size: 17px;
-}
-
-.save-btn {
-  background: #28a745;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 15px;
-  transition: 0.3s;
-}
-
-.save-btn:hover {
-  background: #1c7c31;
-}
-
-@media (max-width: 768px) {
-  .purchase-header,
-  .purchase-row,
-  .purchase-item-row {
-    flex-direction: column;
-  }
-
-  .purchase-item-row input,
-  .purchase-item-row select {
-    width: 100%;
-  }
-
-  .purchase-table th,
-  .purchase-table td {
-    font-size: 13px;
-    padding: 8px;
-  }
-} */
+/* 
 
 
-
-/* Purchase Container */
 .purchase-header-container, .purchase-row, .item-input-row {
   display: flex;
   flex-wrap: wrap;
@@ -212,19 +8,17 @@
   margin-bottom: 20px;
 }
 
-/* Labels */
 .purchase-label {
   display: block;
   font-weight: 600;
-  color: #b33951; /* deep rose */
+  color: #b33951; 
   margin-bottom: 5px;
   font-size: 0.9rem;
 }
 
-/* Inputs & Selects */
 .purchase-input, .purchase-select, .item-input-row input, .item-input-row select {
   padding: 8px 10px;
-  border: 1px solid #f5a9b8; /* light pink border */
+  border: 1px solid #f5a9b8; 
   border-radius: 5px;
   outline: none;
   font-size: 0.9rem;
@@ -232,26 +26,23 @@
 }
 
 .purchase-input:focus, .purchase-select:focus, .item-input-row input:focus, .item-input-row select:focus {
-  border-color: #d63031; /* dark rose on focus */
+  border-color: #d63031; 
   box-shadow: 0 0 5px rgba(214, 48, 49, 0.3);
 }
 
-/* Purchase Title */
 .purchase-title {
   text-align: center;
-  color: #c44569; /* rose pink */
+  color: #c44569; 
   font-size: 2rem;
   margin-bottom: 30px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Fields Container */
 .purchase-field {
   flex: 1 1 200px;
   min-width: 180px;
 }
 
-/* Item Row */
 .item-input-row {
   display: flex;
   gap: 10px;
@@ -263,7 +54,6 @@
   flex: 1 1 120px;
 }
 
-/* Buttons */
 button {
   background: linear-gradient(45deg, #f78fb3, #f5a9b8);
   color: white;
@@ -280,7 +70,6 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Items List */
 ul {
   margin-top: 10px;
   padding-left: 0;
@@ -288,7 +77,7 @@ ul {
 }
 
 ul li {
-  background: #f8c1d6; /* soft pink */
+  background: #f8c1d6; 
   margin-bottom: 8px;
   padding: 8px 12px;
   border-radius: 6px;
@@ -296,7 +85,7 @@ ul li {
   justify-content: space-between;
   align-items: center;
   font-weight: 500;
-  color: #6d214f; /* rose text */
+  color: #6d214f; 
 }
 
 .purchase-footer {
@@ -327,14 +116,12 @@ ul li button {
   background: #c44569;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .purchase-header-container, .purchase-row, .item-input-row {
     flex-direction: column;
   }
 }
 
-/* Product Suggestion */
 .product-suggest-container {
   position: relative;
   width: 200px;
@@ -372,4 +159,4 @@ ul li button {
   background-color: #007bff;
   color: white;
   scroll-margin: 5px;
-}
+} */

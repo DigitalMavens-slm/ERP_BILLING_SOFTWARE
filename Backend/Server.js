@@ -24,6 +24,7 @@ const LedgerRoutes=require("./Routes/LedgerRoutes")
 const PurchaseRoutes=require("./Routes/PurchaseRoutes")
 const PurchasePaymentRoutes=require("./Routes/PurchasePaymentRoutes")
 const ReportsRoutes=require("./Routes/ReportsRoutes")
+const DashBoardRoutes=require("./Routes/DashBoardRoutes")
 
 
 const CompanySetting=require("./Routes/CompanysettingRoutes")
@@ -59,6 +60,7 @@ app.use("/api",ProductFormRoutes)
 app.use('/api', CompanySetting);
 
 
+app.use("/api",DashBoardRoutes)
 app.use("/api",PaymentRoutes)
 app.use("/api",LedgerRoutes)
 app.use("/api",require("./Routes/InvoiceRoute/InvoiceCreateRoutes"))

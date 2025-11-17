@@ -102,20 +102,7 @@ const createInvoice = async (req, res) => {
 
 
 
-// 🔹 Get All Invoices
-// const getAllInvoices = async (req, res) => {
-//   try {
-//     const invoices = await Invoice.find().sort({ createdAt: -1 });
-//     // console.log(invoices)
-//     res.json({ success: true, data: invoices });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: "Failed to fetch invoices",
-//       error: error.message,
-//     });
-//   }
-// };
+
 
 // 🔹 Get Single Invoice
 const getInvoiceById = async (req, res) => {

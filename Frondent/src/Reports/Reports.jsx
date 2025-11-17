@@ -242,7 +242,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import "./Reports.css";
+// import "./Reports.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

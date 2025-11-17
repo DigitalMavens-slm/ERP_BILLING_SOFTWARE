@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { handlePrint,handleWhatsAppShare,handleDownloadPDF,handleEmailShare } from "../Utills/AllPrinter";
 import Ledger from "../Ledger"
 import { useSuggestions } from "../Context/SuggestionContext";
-import "./InvoiceDetail.css";
+// import "./InvoiceDetail.css";
 import axios from "axios"
 
 const InvoiceDetails = () => {

@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { SuggestionProvider } from './Context/SuggestionContext.jsx'
 import { LocationProvider } from './Context/LocationContext.jsx'
 import { KeySuggestionProvider } from './Context/KeyBoardContext.jsx'
-import "./input.css"
+import "./index.css"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Axios from "axios"
-import "./LoginSignup.css"
+// import "./LoginSignup.css"
 
 const LoginSignup = () => {
 

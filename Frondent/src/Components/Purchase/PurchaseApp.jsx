@@ -1,6 +1,6 @@
 import React, { useState, useEffect ,} from "react";
 import axios from "axios";
-import "./PurchaseApp.css";
+// import "./PurchaseApp.css";
 import {useSuggestion} from "../../Context/KeyBoardContext"
 import { useNavigate } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -272,134 +272,378 @@ if (name === "supplier") {
     }
   };
 
-  return (
-    <div className="purchase-app">
-      {/* HEADER SECTION */}
-      <div className="purchase-header">
-        <div className="purchase-field">
-          <label>Bill No *</label>
-          <input value={billNum} readOnly />
+//   return (
+//     <div className="purchase-app">
+//       {/* HEADER SECTION */}
+//       <div className="purchase-header">
+//         <div className="purchase-field">
+//           <label>Bill No *</label>
+//           <input value={billNum} readOnly />
+//         </div>
+
+//         <div className="purchase-field">
+//           <label>Date *</label>
+//           <input
+//             type="date"
+//             value={date}
+//             onChange={(e) => setDate(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="purchase-field">
+//           <label>Purchase Type *</label>
+//           <select
+//             value={purchaseType}
+//             onChange={(e) => setPurchaseType(e.target.value)}
+//           >
+//             <option value="Purchase">Purchase</option>
+//             <option value="Purchase Return">Purchase Return</option>
+//           </select>
+//         </div>
+//       </div>
+
+//       {/* SUPPLIER SECTION */}
+//       <div className="purchase-row">
+//         <div className="purchase-field" style={{ position: "relative" }}>
+//           <label>Supplier Name *</label>
+//           <input
+//             placeholder="Enter Supplier Name"
+//             value={selectedName}
+//             name="supplier"
+//             onChange={handleChange}
+//             // onClick={()=>filteredSuppliers}
+//               onClick={() => {
+//     // 🔹 When user just clicks without typing, show all suppliers
+//     if (filteredSuppliers.length === 0) {
+//       setFilteredSuppliers(suppliersList);
+//     }
+//   }}
+//   onFocus={() => {
+//     // 🔹 Also works if user tabs into input field
+//     if (filteredSuppliers.length === 0) {
+//       setFilteredSuppliers(suppliersList);
+//     }
+//   }}
+              
+//               onKeyDown={(e) => handleKeyDown(e, selectSupplier)}
+//             autoComplete="off"
+//           />
+//           {filteredSuppliers.length > 0 && (
+//             <ul className="suggestion-box">
+              
+// {filteredSuppliers.map((s) => (
+//   <>
+//   <li key={s._id} onClick={() => selectSupplier(s.supplierName || s.name)}
+//     ref={(el) => (suggestionRefs.current[s] = el)} // ✅ scroll into view
+//         className={highlightIndex === s ? "highlighted" : ""} // ✅ visual highlight
+//   >
+
+//                 {s.supplierName || s.name}  
+//     </li>
+//     </>
+// )
+// )
+// }
+              
+// <button onClick={()=>navigate("/setting/customer")}>AddCustomer</button>
+//             </ul>
+//           )}
+//         </div>
+
+//         <div className="purchase-field">
+//           <label>Bill Type *</label>
+//           <select
+//             value={billType}
+//             onChange={(e) => setBillType(e.target.value)}
+//           >
+//             <option value="Cash">Cash</option>
+//             <option value="Credit">Credit</option>
+//           </select>
+//         </div>
+
+//         <div className="purchase-field">
+//           <label>GST Type *</label>
+//           <select
+//             value={gstType}
+//             onChange={(e) => setGstType(e.target.value)}
+//           >
+//             <option value="GST">GST</option>
+//             <option value="IGST">IGST</option>
+//             <option value="No Tax">No Tax</option>
+//           </select>
+//         </div>
+
+//         <div className="purchase-field">
+//           <label>Amount Type *</label>
+//           <select
+//             value={amountType}
+//             onChange={(e) => setAmountType(e.target.value)}
+//           >
+//             <option value="No Tax">No Tax</option>
+//             <option value="Including Tax">Including Tax</option>
+//             <option value="Excluding Tax">Excluding Tax</option>
+//           </select>
+//         </div>
+//       </div>
+
+//       {/* ITEM ENTRY */}
+//       <div className="purchase-item-row" style={{ position: "relative" }}>
+//         <div className="product-suggest-container">
+//           <input
+//             placeholder="Product Name"
+//             name="product"
+//             value={item.product}
+//             onChange={handleChange}
+//             autoComplete="off"
+//           />
+//           {filteredProducts.length > 0 && (
+//             <ul className="suggestion-box">
+//               {filteredProducts.map((p) => (
+//                 <li key={p._id} onClick={() => selectProduct(p.name)}>
+//                   {p.name}
+//                 </li>
+//               ))}
+//             </ul>
+//           )}
+//         </div>
+
+//         <input
+//           placeholder="QTY"
+//           name="qty"
+//           type="number"
+//           value={item.qty}
+//           onChange={handleChange}
+//         />
+//         <input
+//           placeholder="MRP"
+//           name="mrp"
+//           type="number"
+//           value={item.mrp}
+//           onChange={handleChange}
+//         />
+//         <input
+//           placeholder="Rate"
+//           name="rate"
+//           type="number"
+//           value={item.rate}
+//           onChange={handleChange}
+//         />
+//         <input
+//           placeholder="DIS %"
+//           name="dis"
+//           type="number"
+//           value={item.dis}
+//           onChange={handleChange}
+//         />
+//         <select name="tax" value={item.tax} onChange={handleChange}>
+//           <option value="0">0</option>
+//           <option value="5">5</option>
+//           <option value="12">12</option>
+//           <option value="18">18</option>
+//           <option value="28">28</option>
+//         </select>
+//         <button onClick={addItem}>Add</button>
+//       </div>
+
+//       {/* ITEM TABLE */}
+//       <div className="table-container">
+//         <table className="purchase-table">
+//           <thead>
+//             <tr>
+//               <th>Product Name</th>
+//               <th>Qty</th>
+//               <th>MRP</th>
+//               <th>Rate</th>
+//               <th>Dis%</th>
+//               <th>GST%</th>
+//               <th>Total</th>
+//               <th>Action</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {items.map((itm, idx) => (
+//               <tr key={idx}>
+//                 <td>{itm.product}</td>
+//                 <td>{itm.qty}</td>
+//                 <td>₹{itm.mrp}</td>
+//                 <td>₹{itm.rate}</td>
+//                 <td>{itm.dis}%</td>
+//                 <td>{itm.tax}%</td>
+//                 <td>₹{calculateItemBreakdown(itm).totalAmount.toFixed(2)}</td>
+//                 <td>
+//                   <button onClick={() => deleteItem(idx)}>Delete</button>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {/* FOOTER */}
+//       <div className="purchase-footer">
+//         <div>Total Qty: {quantity}</div>
+//         <div className="payable">Payable Amount: ₹{subtotal.toFixed(2)}</div>
+//       </div>
+
+//       <div style={{ textAlign: "right", marginTop: "20px" }}>
+//         <button onClick={handleSave} className="save-btn">
+//           Save & View Purchase
+//         </button>
+//       </div>
+//     </div>
+//   );
+
+
+return (
+  <div className="min-h-screen w-full p-4 md:p-6 bg-gradient-to-br from-slate-100 to-slate-200">
+
+    {/* ---------- CARD: BILL DETAILS ---------- */}
+    <div className="bg-white/80 backdrop-blur-xl shadow-lg rounded-2xl p-5 mb-6 border border-slate-200">
+      <h2 className="text-xl font-semibold mb-4 text-slate-700">🧾 Bill Details</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label className="text-sm text-slate-600">Bill No</label>
+          <input
+            value={billNum}
+            readOnly
+            className="w-full mt-1 px-3 py-2 border rounded-xl bg-slate-100 focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
-        <div className="purchase-field">
-          <label>Date *</label>
+        <div>
+          <label className="text-sm text-slate-600">Date</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            className="w-full mt-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <div className="purchase-field">
-          <label>Purchase Type *</label>
+        <div>
+          <label className="text-sm text-slate-600">Purchase Type</label>
           <select
             value={purchaseType}
             onChange={(e) => setPurchaseType(e.target.value)}
+            className="w-full mt-1 px-3 py-2 border rounded-xl"
           >
-            <option value="Purchase">Purchase</option>
-            <option value="Purchase Return">Purchase Return</option>
+            <option>Purchase</option>
+            <option>Purchase Return</option>
           </select>
         </div>
       </div>
+    </div>
 
-      {/* SUPPLIER SECTION */}
-      <div className="purchase-row">
-        <div className="purchase-field" style={{ position: "relative" }}>
-          <label>Supplier Name *</label>
+    {/* ---------- CARD: SUPPLIER ---------- */}
+    <div className="bg-white/80 backdrop-blur-xl shadow-lg rounded-2xl p-5 mb-6 border border-slate-200">
+      <h2 className="text-xl font-semibold mb-4 text-slate-700">👤 Supplier Details</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+        {/* Supplier Name */}
+        <div className="relative">
+          <label className="text-sm text-slate-600">Supplier *</label>
           <input
-            placeholder="Enter Supplier Name"
-            value={selectedName}
             name="supplier"
+            value={selectedName}
             onChange={handleChange}
-            // onClick={()=>filteredSuppliers}
-              onClick={() => {
-    // 🔹 When user just clicks without typing, show all suppliers
-    if (filteredSuppliers.length === 0) {
-      setFilteredSuppliers(suppliersList);
-    }
-  }}
-  onFocus={() => {
-    // 🔹 Also works if user tabs into input field
-    if (filteredSuppliers.length === 0) {
-      setFilteredSuppliers(suppliersList);
-    }
-  }}
-              
-              onKeyDown={(e) => handleKeyDown(e, selectSupplier)}
+            onClick={() => setFilteredSuppliers(suppliersList)}
+            onFocus={() => setFilteredSuppliers(suppliersList)}
+            onKeyDown={(e) => handleKeyDown(e, selectSupplier)}
+            className="w-full mt-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500"
             autoComplete="off"
           />
-          {filteredSuppliers.length > 0 && (
-            <ul className="suggestion-box">
-              
-{filteredSuppliers.map((s) => (
-  <>
-  <li key={s._id} onClick={() => selectSupplier(s.supplierName || s.name)}
-    ref={(el) => (suggestionRefs.current[s] = el)} // ✅ scroll into view
-        className={highlightIndex === s ? "highlighted" : ""} // ✅ visual highlight
-  >
 
-                {s.supplierName || s.name}  
-    </li>
-    </>
-)
-)
-}
-              
-<button onClick={()=>navigate("/setting/customer")}>AddCustomer</button>
+          {/* Suggestion Box */}
+          {filteredSuppliers.length > 0 && (
+            <ul className="absolute z-50 bg-white shadow-lg border rounded-xl w-full mt-1 max-h-56 overflow-y-auto">
+              {filteredSuppliers.map((s, idx) => (
+                <li
+                  key={s._id}
+                  onClick={() => selectSupplier(s.name || s.supplierName)}
+                  className={`px-3 py-2 cursor-pointer hover:bg-blue-100 ${
+                    idx === highlightIndex ? "bg-blue-200" : ""
+                  }`}
+                >
+                  {s.name || s.supplierName}
+                </li>
+              ))}
+
+              <button
+                onClick={() => navigate("/setting/customer")}
+                className="w-full py-2 bg-green-100 hover:bg-green-200"
+              >
+                ➕ Add New Supplier
+              </button>
             </ul>
           )}
         </div>
 
-        <div className="purchase-field">
-          <label>Bill Type *</label>
+        <div>
+          <label className="text-sm text-slate-600">Bill Type</label>
           <select
             value={billType}
             onChange={(e) => setBillType(e.target.value)}
+            className="w-full mt-1 px-3 py-2 border rounded-xl"
           >
-            <option value="Cash">Cash</option>
-            <option value="Credit">Credit</option>
+            <option>Cash</option>
+            <option>Credit</option>
           </select>
         </div>
 
-        <div className="purchase-field">
-          <label>GST Type *</label>
+        <div>
+          <label className="text-sm text-slate-600">GST Type</label>
           <select
             value={gstType}
             onChange={(e) => setGstType(e.target.value)}
+            className="w-full mt-1 px-3 py-2 border rounded-xl"
           >
-            <option value="GST">GST</option>
-            <option value="IGST">IGST</option>
-            <option value="No Tax">No Tax</option>
+            <option>GST</option>
+            <option>IGST</option>
+            <option>No Tax</option>
           </select>
         </div>
 
-        <div className="purchase-field">
-          <label>Amount Type *</label>
+        <div>
+          <label className="text-sm text-slate-600">Amount Type</label>
           <select
             value={amountType}
             onChange={(e) => setAmountType(e.target.value)}
+            className="w-full mt-1 px-3 py-2 border rounded-xl"
           >
-            <option value="No Tax">No Tax</option>
-            <option value="Including Tax">Including Tax</option>
-            <option value="Excluding Tax">Excluding Tax</option>
+            <option>No Tax</option>
+            <option>Including Tax</option>
+            <option>Excluding Tax</option>
           </select>
         </div>
       </div>
+    </div>
 
-      {/* ITEM ENTRY */}
-      <div className="purchase-item-row" style={{ position: "relative" }}>
-        <div className="product-suggest-container">
+    {/* ---------- CARD: ADD PRODUCT ---------- */}
+    <div className="bg-white/80 backdrop-blur-xl shadow-lg rounded-2xl p-5 mb-6 border border-slate-200">
+      <h2 className="text-xl font-semibold mb-4 text-slate-700">📦 Add Product</h2>
+
+      <div className="grid grid-cols-2 md:grid-cols-7 gap-3 items-center">
+
+        {/* Product search */}
+        <div className="relative col-span-2 md:col-span-1">
           <input
-            placeholder="Product Name"
             name="product"
             value={item.product}
             onChange={handleChange}
-            autoComplete="off"
+            placeholder="Product Name"
+            className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500"
           />
+
           {filteredProducts.length > 0 && (
-            <ul className="suggestion-box">
+            <ul className="absolute z-50 bg-white border shadow-lg rounded-xl w-full mt-1 max-h-48 overflow-y-auto">
               {filteredProducts.map((p) => (
-                <li key={p._id} onClick={() => selectProduct(p.name)}>
+                <li
+                  key={p._id}
+                  onClick={() => selectProduct(p.name)}
+                  className="px-3 py-2 cursor-pointer hover:bg-blue-100"
+                >
                   {p.name}
                 </li>
               ))}
@@ -407,63 +651,50 @@ if (name === "supplier") {
           )}
         </div>
 
-        <input
-          placeholder="QTY"
-          name="qty"
-          type="number"
-          value={item.qty}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="MRP"
-          name="mrp"
-          type="number"
-          value={item.mrp}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="Rate"
-          name="rate"
-          type="number"
-          value={item.rate}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="DIS %"
-          name="dis"
-          type="number"
-          value={item.dis}
-          onChange={handleChange}
-        />
-        <select name="tax" value={item.tax} onChange={handleChange}>
-          <option value="0">0</option>
-          <option value="5">5</option>
-          <option value="12">12</option>
-          <option value="18">18</option>
-          <option value="28">28</option>
-        </select>
-        <button onClick={addItem}>Add</button>
-      </div>
+        <input name="qty" value={item.qty} onChange={handleChange} type="number" placeholder="Qty"
+          className="px-3 py-2 border rounded-xl" />
+        <input name="mrp" value={item.mrp} onChange={handleChange} type="number" placeholder="MRP"
+          className="px-3 py-2 border rounded-xl" />
+        <input name="rate" value={item.rate} onChange={handleChange} type="number" placeholder="Rate"
+          className="px-3 py-2 border rounded-xl" />
+        <input name="dis" value={item.dis} onChange={handleChange} type="number" placeholder="DIS %"
+          className="px-3 py-2 border rounded-xl" />
 
-      {/* ITEM TABLE */}
-      <div className="table-container">
-        <table className="purchase-table">
-          <thead>
-            <tr>
-              <th>Product Name</th>
+        <select name="tax" value={item.tax} onChange={handleChange}
+          className="px-3 py-2 border rounded-xl">
+          <option>0</option><option>5</option><option>12</option><option>18</option><option>28</option>
+        </select>
+
+        <button
+          onClick={addItem}
+          className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+
+    {/* ---------- CARD: TABLE ---------- */}
+    <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg p-5 mb-6 border border-slate-200">
+      <div className="overflow-auto max-h-[350px]">
+        <table className="w-full text-left">
+          <thead className="sticky top-0 bg-slate-100 shadow-sm">
+            <tr className="text-slate-700 border-b">
+              <th className="py-2">Product</th>
               <th>Qty</th>
               <th>MRP</th>
               <th>Rate</th>
-              <th>Dis%</th>
+              <th>DIS%</th>
               <th>GST%</th>
               <th>Total</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
+
           <tbody>
-            {items.map((itm, idx) => (
-              <tr key={idx}>
-                <td>{itm.product}</td>
+            {items.map((itm, i) => (
+              <tr key={i} className="border-b hover:bg-slate-50">
+                <td className="py-2">{itm.product}</td>
                 <td>{itm.qty}</td>
                 <td>₹{itm.mrp}</td>
                 <td>₹{itm.rate}</td>
@@ -471,27 +702,549 @@ if (name === "supplier") {
                 <td>{itm.tax}%</td>
                 <td>₹{calculateItemBreakdown(itm).totalAmount.toFixed(2)}</td>
                 <td>
-                  <button onClick={() => deleteItem(idx)}>Delete</button>
+                  <button
+                    onClick={() => deleteItem(i)}
+                    className="text-red-600 hover:underline"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* FOOTER */}
-      <div className="purchase-footer">
-        <div>Total Qty: {quantity}</div>
-        <div className="payable">Payable Amount: ₹{subtotal.toFixed(2)}</div>
-      </div>
-
-      <div style={{ textAlign: "right", marginTop: "20px" }}>
-        <button onClick={handleSave} className="save-btn">
-          Save & View Purchase
-        </button>
-      </div>
     </div>
-  );
+
+    {/* ---------- FOOTER SUMMARY ---------- */}
+    <div className="bg-white/80 backdrop-blur-xl shadow-md rounded-2xl p-5 flex justify-between text-lg border border-slate-200">
+      <div>Total Qty: {quantity}</div>
+      <div className="font-semibold text-green-700">Payable: ₹{subtotal.toFixed(2)}</div>
+    </div>
+
+    {/* ---------- SAVE BUTTON ---------- */}
+    <div className="text-right mt-6">
+      <button
+        onClick={handleSave}
+        className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl text-lg shadow-md"
+      >
+        Save Purchase
+      </button>
+    </div>
+
+  </div>
+);
+
 };
 
 export default PurchaseApp;
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { useSuggestion } from "../../Context/KeyBoardContext";
+// import { useNavigate } from "react-router-dom";
+
+// const API_URL = import.meta.env.VITE_API_URL;
+
+// const PurchaseApp = () => {
+//   const navigate = useNavigate();
+
+//   const {
+//     highlightIndex,
+//     handleKeyDown,
+//     suggestionRefs,
+//   } = useSuggestion();
+
+//   // BASIC STATES
+//   const [billNum, setBillNum] = useState("");
+//   const [date, setDate] = useState("");
+//   const [purchaseType, setPurchaseType] = useState("Purchase");
+//   const [selectedName, setSelectedName] = useState("");
+
+//   const [supplierDetails, setSupplierDetails] = useState({
+//     supplierId: "",
+//     phone: "",
+//     gstin: "",
+//     email: "",
+//     address: "",
+//   });
+
+//   const [billType, setBillType] = useState("Cash");
+//   const [gstType, setGstType] = useState("GST");
+//   const [amountType, setAmountType] = useState("Excluding Tax");
+
+//   const [productsList, setProductsList] = useState([]);
+//   const [suppliersList, setSuppliersList] = useState([]);
+//   const [filteredProducts, setFilteredProducts] = useState([]);
+//   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
+
+//   // PRODUCT ITEM STATE
+//   const [item, setItem] = useState({
+//     product: "",
+//     qty: 0,
+//     mrp: 0,
+//     rate: 0,
+//     dis: 0,
+//     tax: 18,
+//   });
+
+//   const [items, setItems] = useState([]);
+
+//   // FETCH DATA
+//   useEffect(() => {
+//     axios.get(`${API_URL}/api/products`).then((res) => {
+//       setProductsList(res.data);
+//     });
+//   }, []);
+
+//   useEffect(() => {
+//     axios.get(`${API_URL}/api/suppliers`).then((res) => {
+//       setSuppliersList(res.data);
+//     });
+//   }, []);
+
+//   // AUTO BILL NUMBER
+//   useEffect(() => {
+//     const load = async () => {
+//       try {
+//         const res = await axios.get(`${API_URL}/api/purchases/next-bill-num`);
+//         setBillNum(res.data.nextBillNum);
+//       } catch {
+//         setBillNum("BILL0001");
+//       }
+//       setDate(new Date().toISOString().split("T")[0]);
+//     };
+//     load();
+//   }, []);
+
+//   // INPUT CHANGES
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+
+//     // ------- SUPPLIER SEARCH ------
+//     if (name === "supplier") {
+//       setSelectedName(value);
+//       if (value.trim().length > 0) {
+//         const filtered = suppliersList.filter((s) =>
+//           (s.supplierName || s.name)
+//             .toLowerCase()
+//             .includes(value.toLowerCase())
+//         );
+//         setFilteredSuppliers(filtered);
+//       } else {
+//         setFilteredSuppliers([]);
+//       }
+//       return;
+//     }
+
+//     // ------- PRODUCT SEARCH ------
+//     if (name === "product") {
+//       setItem({ ...item, product: value });
+//       if (value.trim().length > 0) {
+//         const filtered = productsList.filter((p) =>
+//           p.name.toLowerCase().includes(value.toLowerCase())
+//         );
+//         setFilteredProducts(filtered);
+//       } else {
+//         setFilteredProducts([]);
+//       }
+//       return;
+//     }
+
+//     // NUMBERS
+//     setItem({
+//       ...item,
+//       [name]: ["qty", "mrp", "rate", "dis"].includes(name)
+//         ? Number(value)
+//         : value,
+//     });
+//   };
+
+//   // SELECT SUPPLIER
+//   const selectSupplier = (name) => {
+//     const selected = suppliersList.find(
+//       (s) => s.supplierName === name || s.name === name
+//     );
+
+//     if (selected) {
+//       setSupplierDetails({
+//         supplierId: selected._id,
+//         phone: selected.phone || "",
+//         gstin: selected.gstin || "",
+//         email: selected.email || "",
+//         address: selected.address || "",
+//       });
+//       setSelectedName(selected.name || selected.supplierName);
+//     }
+//     setFilteredSuppliers([]);
+//   };
+
+//   // SELECT PRODUCT
+//   const selectProduct = (name) => {
+//     const p = productsList.find((v) => v.name === name);
+//     if (p) {
+//       setItem({
+//         ...item,
+//         product: p.name,
+//         mrp: p.mrp || 0,
+//         rate: p.purchaseRate || 0,
+//         tax: p.gst || 18,
+//       });
+//     }
+//     setFilteredProducts([]);
+//   };
+
+//   // ADD ITEM
+//   const addItem = () => {
+//     if (!item.product.trim()) return alert("Enter Product name!");
+//     if (item.qty <= 0) return alert("Quantity must be > 0");
+//     if (item.rate <= 0) return alert("Rate must be > 0");
+
+//     setItems([...items, item]);
+//     setItem({ product: "", qty: 0, mrp: 0, rate: 0, dis: 0, tax: 18 });
+//   };
+
+//   // DELETE ITEM
+//   const deleteItem = (idx) => {
+//     setItems(items.filter((_, i) => i !== idx));
+//   };
+
+//   // CALC
+//   const breakdown = (itm) => {
+//     let base = itm.rate * itm.qty - (itm.rate * itm.qty * itm.dis) / 100;
+//     let tax = (base * itm.tax) / 100;
+//     return { total: base + tax };
+//   };
+
+//   const subtotal = items.reduce((acc, itm) => acc + breakdown(itm).total, 0);
+//   const quantity = items.reduce((a, b) => a + b.qty, 0);
+
+//   // SAVE PURCHASE
+//   const handleSave = async () => {
+//     if (!supplierDetails.supplierId) return alert("Select valid supplier");
+//     if (items.length === 0) return alert("Add items");
+
+//     const data = {
+//       supplierId: supplierDetails.supplierId,
+//       date,
+//       purchaseType,
+//       supplierName: selectedName,
+//       billType,
+//       gstType,
+//       amountType,
+//       items,
+//       subtotal,
+//       totalQty: quantity,
+//     };
+
+//     try {
+//       await axios.post(`${API_URL}/api/purchases`, data);
+
+//       alert("Purchase Saved Successfully!");
+//       setItems([]);
+//       setSelectedName("");
+//     } catch {
+//       alert("Error saving data");
+//     }
+//   };
+
+//   // ---------------- UI SECTION ----------------
+//   return (
+//     // <div className="w-full min-h-[calc(100vh-80px)] overflow-y-auto p-6 bg-gray-100">
+//     <div className="bg-white shadow-md rounded-xl p-4">
+
+
+//       {/* BILL DETAILS */}
+//       <div className="bg-white shadow rounded-xl p-5 mb-6">
+//         <h2 className="text-xl font-semibold mb-4 text-gray-700">Bill Details</h2>
+
+//         <div className="grid grid-cols-4 gap-4">
+//           <div>
+//             <label className="text-sm text-gray-600">Bill No</label>
+//             <input
+//               value={billNum}
+//               readOnly
+//               className="w-full mt-1 px-3 py-2 border rounded-lg bg-gray-100"
+//             />
+//           </div>
+
+//           <div>
+//             <label className="text-sm text-gray-600">Date</label>
+//             <input
+//               type="date"
+//               value={date}
+//               onChange={(e) => setDate(e.target.value)}
+//               className="w-full mt-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+
+//           <div>
+//             <label className="text-sm text-gray-600">Purchase Type</label>
+//             <select
+//               value={purchaseType}
+//               onChange={(e) => setPurchaseType(e.target.value)}
+//               className="w-full mt-1 px-3 py-2 border rounded-lg"
+//             >
+//               <option>Purchase</option>
+//               <option>Purchase Return</option>
+//             </select>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* SUPPLIER DETAILS */}
+//       <div className="bg-white shadow rounded-xl p-5 mb-6">
+//         <h2 className="text-xl font-semibold mb-4 text-gray-700">Supplier Details</h2>
+
+//         <div className="grid grid-cols-5 gap-4">
+
+//           {/* SUPPLIER SEARCH */}
+//           <div className="relative">
+//             <label className="text-sm text-gray-600">Supplier *</label>
+
+//             <input
+//               name="supplier"
+//               value={selectedName}
+//               onChange={handleChange}
+//               onClick={() => setFilteredSuppliers(suppliersList)}
+//               onFocus={() => setFilteredSuppliers(suppliersList)}
+//               onKeyDown={(e) => handleKeyDown(e, selectSupplier)}
+//               className="w-full mt-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//               autoComplete="off"
+//             />
+
+//             {filteredSuppliers.length > 0 && (
+//               <ul className="absolute z-50 bg-white shadow-md border rounded-lg w-full mt-1 max-h-56 overflow-y-auto">
+//                 {filteredSuppliers.map((s, idx) => (
+//                   <li
+//                     key={s._id}
+//                     onClick={() => selectSupplier(s.name || s.supplierName)}
+//                     ref={(el) => (suggestionRefs.current[idx] = el)}
+//                     className={`px-3 py-2 cursor-pointer hover:bg-blue-100 ${
+//                       idx === highlightIndex ? "bg-blue-200" : ""
+//                     }`}
+//                   >
+//                     {s.name || s.supplierName}
+//                   </li>
+//                 ))}
+
+//                 <button
+//                   onClick={() => navigate("/setting/customer")}
+//                   className="w-full py-2 bg-green-100 hover:bg-green-200"
+//                 >
+//                   ➕ Add New Supplier
+//                 </button>
+//               </ul>
+//             )}
+//           </div>
+
+//           {/* BILL TYPE */}
+//           <div>
+//             <label className="text-sm text-gray-600">Bill Type</label>
+//             <select
+//               value={billType}
+//               onChange={(e) => setBillType(e.target.value)}
+//               className="w-full mt-1 px-3 py-2 border rounded-lg"
+//             >
+//               <option>Cash</option>
+//               <option>Credit</option>
+//             </select>
+//           </div>
+
+//           {/* GST TYPE */}
+//           <div>
+//             <label className="text-sm text-gray-600">GST Type</label>
+//             <select
+//               value={gstType}
+//               onChange={(e) => setGstType(e.target.value)}
+//               className="w-full mt-1 px-3 py-2 border rounded-lg"
+//             >
+//               <option>GST</option>
+//               <option>IGST</option>
+//               <option>No Tax</option>
+//             </select>
+//           </div>
+
+//           {/* AMOUNT TYPE */}
+//           <div>
+//             <label className="text-sm text-gray-600">Amount Type</label>
+//             <select
+//               value={amountType}
+//               onChange={(e) => setAmountType(e.target.value)}
+//               className="w-full mt-1 px-3 py-2 border rounded-lg"
+//             >
+//               <option>No Tax</option>
+//               <option>Including Tax</option>
+//               <option>Excluding Tax</option>
+//             </select>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* ADD PRODUCT ROW */}
+//       <div className="bg-white shadow rounded-xl p-5 mb-6">
+//         <h2 className="text-xl font-semibold mb-4 text-gray-700">Add Product</h2>
+
+//         <div className="grid grid-cols-7 gap-3 items-center">
+
+//           {/* PRODUCT */}
+//           <div className="relative">
+//             <input
+//               name="product"
+//               value={item.product}
+//               onChange={handleChange}
+//               placeholder="Product Name"
+//               className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//             />
+
+//             {filteredProducts.length > 0 && (
+//               <ul className="absolute z-50 bg-white border shadow-lg rounded-lg w-full mt-1 max-h-48 overflow-y-auto">
+//                 {filteredProducts.map((p) => (
+//                   <li
+//                     key={p._id}
+//                     onClick={() => selectProduct(p.name)}
+//                     className="px-3 py-2 cursor-pointer hover:bg-blue-100"
+//                   >
+//                     {p.name}
+//                   </li>
+//                 ))}
+//               </ul>
+//             )}
+//           </div>
+
+//           {/* QTY */}
+//           <input
+//             type="number"
+//             name="qty"
+//             value={item.qty}
+//             onChange={handleChange}
+//             placeholder="Qty"
+//             className="px-3 py-2 border rounded-lg"
+//           />
+
+//           {/* MRP */}
+//           <input
+//             type="number"
+//             name="mrp"
+//             value={item.mrp}
+//             onChange={handleChange}
+//             placeholder="MRP"
+//             className="px-3 py-2 border rounded-lg"
+//           />
+
+//           {/* RATE */}
+//           <input
+//             type="number"
+//             name="rate"
+//             value={item.rate}
+//             onChange={handleChange}
+//             placeholder="Rate"
+//             className="px-3 py-2 border rounded-lg"
+//           />
+
+//           {/* DISCOUNT */}
+//           <input
+//             type="number"
+//             name="dis"
+//             value={item.dis}
+//             onChange={handleChange}
+//             placeholder="Dis%"
+//             className="px-3 py-2 border rounded-lg"
+//           />
+
+//           {/* TAX */}
+//           <select
+//             name="tax"
+//             value={item.tax}
+//             onChange={handleChange}
+//             className="px-3 py-2 border rounded-lg"
+//           >
+//             <option>0</option>
+//             <option>5</option>
+//             <option>12</option>
+//             <option>18</option>
+//             <option>28</option>
+//           </select>
+
+//           {/* ADD BTN */}
+//           <button
+//             onClick={addItem}
+//             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+//           >
+//             Add
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* TABLE */}
+//       <div className="bg-white shadow rounded-xl p-5 mb-6">
+//         <table className="w-full text-left">
+//           <thead>
+//             <tr className="text-gray-700 border-b">
+//               <th className="py-2">Product</th>
+//               <th>Qty</th>
+//               <th>MRP</th>
+//               <th>Rate</th>
+//               <th>Dis%</th>
+//               <th>GST%</th>
+//               <th>Total</th>
+//               <th></th>
+//             </tr>
+//           </thead>
+
+//           <tbody>
+//             {items.map((itm, i) => (
+//               <tr key={i} className="border-b">
+//                 <td className="py-2">{itm.product}</td>
+//                 <td>{itm.qty}</td>
+//                 <td>₹{itm.mrp}</td>
+//                 <td>₹{itm.rate}</td>
+//                 <td>{itm.dis}%</td>
+//                 <td>{itm.tax}%</td>
+//                 <td>₹{breakdown(itm).total.toFixed(2)}</td>
+//                 <td>
+//                   <button
+//                     onClick={() => deleteItem(i)}
+//                     className="text-red-600 hover:underline"
+//                   >
+//                     Delete
+//                   </button>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {/* FOOTER SUMMARY */}
+//       <div className="bg-white shadow rounded-xl p-4 flex justify-between text-lg">
+//         <div>Total Qty: {quantity}</div>
+//         <div className="font-semibold">
+//           Payable Amount: ₹{subtotal.toFixed(2)}
+//         </div>
+//       </div>
+
+//       {/* SAVE BUTTON */}
+//       <div className="text-right mt-6">
+//         <button
+//           onClick={handleSave}
+//           className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg"
+//         >
+//           Save Purchase
+//         </button>
+//       </div>
+
+//     </div>
+//   );
+// };
+
+// export default PurchaseApp;
