@@ -263,6 +263,7 @@ export default function ReportsPage() {
 
   const [chartData, setChartData] = useState([]);
   const [rows, setRows] = useState([]);
+  console.log(rows)
   const [loading, setLoading] = useState(false);
 
   // Fetch report data
@@ -327,148 +328,222 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="reports-container">
-      <header className="reports-header">
-        <h1>Reports</h1>
-        <p>Business overview — sales, purchase, and cashflow reports.</p>
-      </header>
+  <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
 
-      <div className="reports-layout">
-        {/* Sidebar Filters */}
-        <aside className="filters-card">
-          <h2>Filters</h2>
+    {/* HEADER */}
+    <header className="mb-6">
+      <h1 className="text-3xl font-extrabold text-gray-800">📊 Reports Dashboard</h1>
+      <p className="text-gray-600 text-sm">
+        Insights — Sales, Purchases & Cashflow Overview
+      </p>
+    </header>
 
-          <label>From</label>
-          <input
-            type="date"
-            name="from"
-            value={filters.from}
-            onChange={onFilterChange}
-          />
+    <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6">
 
-          <label>To</label>
-          <input
-            type="date"
-            name="to"
-            value={filters.to}
-            onChange={onFilterChange}
-          />
+      {/* ================= FILTER SIDEBAR ================= */}
+      <aside className="bg-sandel border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">Filters</h2>
 
-          <label>Report Type</label>
-          <select name="type" value={filters.type} onChange={onFilterChange}>
-            <option value="sales">Sales</option>
-            <option value="purchases">Purchases</option>
-            <option value="cashflow">Cash Flow</option>
-          </select>
+        <div className="space-y-3">
 
-          <label>Customer / Vendor</label>
-          <input
-            name="party"
-            placeholder="All"
-            value={filters.party}
-            onChange={onFilterChange}
-          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700">From</label>
+            <input
+              type="date"
+              name="from"
+              value={filters.from}
+              onChange={onFilterChange}
+              className="border rounded-md px-3 py-2 w-full text-sm focus:ring-2 focus:ring-indigo-300"
+            />
+          </div>
 
-          <div className="filter-buttons">
-            <button className="apply-btn" onClick={applyFilters}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">To</label>
+            <input
+              type="date"
+              name="to"
+              value={filters.to}
+              onChange={onFilterChange}
+              className="border rounded-md px-3 py-2 w-full text-sm focus:ring-2 focus:ring-indigo-300"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Report Type</label>
+            <select
+              name="type" value={filters.type} onChange={onFilterChange}
+              className="border rounded-md px-3 py-2 w-full text-sm focus:ring-2 focus:ring-indigo-300"
+            >
+              <option value="sales">Sales</option>
+              <option value="purchases">Purchases</option>
+              <option value="cashflow">Cash Flow</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Customer / Vendor
+            </label>
+            <input
+              name="party"
+              placeholder="All"
+              value={filters.party}
+              onChange={onFilterChange}
+              className="border rounded-md px-3 py-2 w-full text-sm focus:ring-2 focus:ring-indigo-300"
+            />
+          </div>
+
+          <div className="flex gap-2 pt-2">
+            <button
+              onClick={applyFilters}
+              className="flex-1 bg-green-600 hover:bg-green-500 text-white py-2 rounded-md text-sm shadow"
+            >
               Apply
             </button>
-            <button className="reset-btn" onClick={resetFilters}>
+            <button
+              onClick={resetFilters}
+              className="flex-1 bg-red-600 hover:bg-red-500 text-gray-800 py-2 rounded-md text-sm border"
+            >
               Reset
             </button>
           </div>
-        </aside>
 
-        {/* Main Section */}
-        <main className="reports-main">
-          {/* KPI Cards */}
-          <div className="kpi-grid">
-            <KpiCard title="Total Sales" value={formatCurrency(kpis.totalSales)} />
-            <KpiCard
-              title="Total Purchases"
-              value={formatCurrency(kpis.totalPurchases)}
-            />
-            <KpiCard title="Net Cash" value={formatCurrency(kpis.netCash)} />
-            <KpiCard title="Invoices" value={kpis.invoices} />
+        </div>
+      </aside>
+
+      
+
+      {/* ================= MAIN CONTENT ================= */}
+      <main className="space-y-6">
+
+        {/* KPI CARDS COLORFUL */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <KpiCard color="from-indigo-500 to-indigo-700" title="Total Sales" value={formatCurrency(kpis.totalSales)} />
+          <KpiCard color="from-emerald-500 to-emerald-700" title="Purchases" value={formatCurrency(kpis.totalPurchases)} />
+          <KpiCard color="from-orange-400 to-orange-600" title="Net Cash" value={formatCurrency(kpis.netCash)} />
+          <KpiCard color="from-pink-500 to-pink-700" title="Invoices" value={kpis.invoices} />
+        </div>
+
+        {/* CHART CARD */}
+        <section className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            {getChartTitle()}
+          </h3>
+
+          <div className="w-full h-[260px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="date" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#6366f1"
+                  strokeWidth={2}
+                  dot={{ r: 3, stroke: "#6366f1", fill: "#6366f1" }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
+        </section>
 
-          {/* Chart Section */}
-          <section className="chart-section">
-            <h3>{getChartTitle()}</h3>
-
-            <div className="chart-wrapper">
-              <ResponsiveContainer width="100%" height={260}>
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#4F46E5"
-                    strokeWidth={2}
-                    dot={{ r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </section>
-
-          {/* Records Table */}
-          <section className="records-section">
-            <h3>Records</h3>
-            <div className="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Ref</th>
-                    <th>Party</th>
-                    <th>Type</th>
-                    <th className="text-right">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading ? (
-                    <tr>
-                      <td colSpan={5} className="text-center">
-                        Loading...
-                      </td>
-                    </tr>
-                  ) : rows.length === 0 ? (
-                    <tr>
-                      <td colSpan={5} className="text-center">
-                        No records found
-                      </td>
-                    </tr>
-                  ) : (
-                    rows.map((r) => (
-                      <tr key={r._id}>
-                        <td>{r.date}</td>
-                        <td>{r.reference}</td>
-                        <td>{r.party}</td>
-                        <td>{r.type}</td>
-                        <td className="text-right">{formatCurrency(r.amount)}</td>
-                      </tr>
-                    ))
-                  )}
-
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </main>
-      </div>
+       
+      </main>
+      
     </div>
-  );
+     {/* TABLE SECTION */}
+        <section className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Records</h3>
+
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[600px] border-collapse">
+              <thead>
+                <tr className="bg-indigo-100 text-indigo-900 text-sm">
+                  <th className="p-3">Date</th>
+                  <th className="p-3">Ref</th>
+                  <th className="p-3">Party</th>
+                  <th className="p-3">Type</th>
+                  <th className="p-3 text-right">Amount</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {loading ? (
+                  <tr><td colSpan={5} className="text-center py-4 text-gray-600">Loading...</td></tr>
+                ) : rows.length === 0 ? (
+                  <tr><td colSpan={5} className="text-center py-4 text-gray-600">No records found</td></tr>
+                ) : (
+                  rows.map((r, i) => (
+                    <tr
+                      key={r._id}
+                      className={`${
+                        i % 2 === 0 ? "bg-white" : "bg-indigo-50/40"
+                      } border-b text-sm text-gray-700 hover:bg-indigo-100 transition`}
+                    >
+                      <td className="p-3">{r.date}</td>
+                      <td className="p-3">{r.reference}</td>
+                      <td className="p-3">{r.party}</td>
+                      <td className="p-3">{r.type}</td>
+                      <td className="p-3 text-right">{formatCurrency(r.amount)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+  </div>
+);
+
 }
+
+// function KpiCard({ title, value }) {
+//   return (
+//     <div className="kpi-card">
+//       <div className="kpi-title">{title}</div>
+//       <div className="kpi-value">{value}</div>
+//     </div>
+//   );
+// }
+
 
 function KpiCard({ title, value }) {
   return (
-    <div className="kpi-card">
-      <div className="kpi-title">{title}</div>
-      <div className="kpi-value">{value}</div>
+    <div className="
+      bg-white 
+      border 
+      border-gray-200 
+      rounded-xl 
+      p-4 
+      shadow-sm 
+      hover:shadow-md 
+      transition-all 
+      duration-300
+      flex 
+      flex-col
+      justify-center
+      gap-1
+    ">
+      
+      <div className="text-sm font-medium text-gray-600">
+        {title}
+      </div>
+
+      <div className="
+        text-2xl 
+        font-bold 
+        text-transparent 
+        bg-clip-text 
+        bg-gradient-to-r 
+        from-indigo-500 
+        to-indigo-700
+      ">
+        {value}
+      </div>
+
     </div>
   );
 }

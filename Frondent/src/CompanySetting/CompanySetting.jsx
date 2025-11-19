@@ -401,176 +401,390 @@ export default function CompanySettingsForm() {
     }
   };
 
-  return (
-    <div className="container">
-      <h2>Company Settings</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Company Name</label>
-          <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Contact Person</label>
-          <input type="text" name="contactPerson" value={formData.contactPerson} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Mobile 1</label>
-          <input type="text" name="mobile1" value={formData.mobile1} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Mobile 2</label>
-          <input type="text" name="mobile2" value={formData.mobile2} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Email</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Website</label>
-          <input type="text" name="website" value={formData.website} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Industry</label>
-          <input type="text" name="industry" value={formData.industry} onChange={handleChange} />
-        </div>
+//   return (
+//     <div className="container">
+//       <h2>Company Settings</h2>
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label>Company Name</label>
+//           <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} />
+//         </div>
+//         <div>
+//           <label>Contact Person</label>
+//           <input type="text" name="contactPerson" value={formData.contactPerson} onChange={handleChange} />
+//         </div>
+//         <div>
+//           <label>Mobile 1</label>
+//           <input type="text" name="mobile1" value={formData.mobile1} onChange={handleChange} />
+//         </div>
+//         <div>
+//           <label>Mobile 2</label>
+//           <input type="text" name="mobile2" value={formData.mobile2} onChange={handleChange} />
+//         </div>
+//         <div>
+//           <label>Email</label>
+//           <input type="email" name="email" value={formData.email} onChange={handleChange} />
+//         </div>
+//         <div>
+//           <label>Website</label>
+//           <input type="text" name="website" value={formData.website} onChange={handleChange} />
+//         </div>
+//         <div>
+//           <label>Industry</label>
+//           <input type="text" name="industry" value={formData.industry} onChange={handleChange} />
+//         </div>
 
-      <h3>Address</h3>
-         <div className="form-group">
-           <label>Street</label>
-           <input type="text" name="address.street" value={formData.address?.street || ""} onChange={handleChange} />
-         </div>
-         <div className="form-group">
-           <label>City</label>
-           <input type="text" name="address.city" value={formData.address?.city||""} onChange={handleChange} />
-         </div>
-         <div className="form-group">
-           <label>State</label>
-           <input type="text" name="address.state" value={formData.address?.state ||""} onChange={handleChange} />
-         </div>
-         <div className="form-group">
-           <label>Pincode</label>
-           <input type="text" name="address.pincode" value={formData.address?.pincode ||""} onChange={handleChange} />
-         </div>
+//       <h3>Address</h3>
+//          <div className="form-group">
+//            <label>Street</label>
+//            <input type="text" name="address.street" value={formData.address?.street || ""} onChange={handleChange} />
+//          </div>
+//          <div className="form-group">
+//            <label>City</label>
+//            <input type="text" name="address.city" value={formData.address?.city||""} onChange={handleChange} />
+//          </div>
+//          <div className="form-group">
+//            <label>State</label>
+//            <input type="text" name="address.state" value={formData.address?.state ||""} onChange={handleChange} />
+//          </div>
+//          <div className="form-group">
+//            <label>Pincode</label>
+//            <input type="text" name="address.pincode" value={formData.address?.pincode ||""} onChange={handleChange} />
+//          </div>
 
-         <h3>Bank Details</h3>
-         <div className="form-group">
-           <label>Account Number</label>
-           <input type="text" name="bankDetails.accountNumber" value={formData.bankDetails?.accountNumber || ""} onChange={handleChange} />/         </div>/         <div className="form-group">
-           <label>IFSC</label>
-           <input type="text" name="bankDetails.ifsc" value={formData.bankDetails?.ifsc || ""} onChange={handleChange} />
-         </div>
-         <div className="form-group">
-           <label>Bank Name</label>
-           <input type="text" name="bankDetails.bankName" value={formData.bankDetails?.bankName || ""} onChange={handleChange} />
-         </div>
+//          <h3>Bank Details</h3>
+//          <div className="form-group">
+//            <label>Account Number</label>
+//            <input type="text" name="bankDetails.accountNumber" value={formData.bankDetails?.accountNumber || ""} onChange={handleChange} />/         </div>/         <div className="form-group">
+//            <label>IFSC</label>
+//            <input type="text" name="bankDetails.ifsc" value={formData.bankDetails?.ifsc || ""} onChange={handleChange} />
+//          </div>
+//          <div className="form-group">
+//            <label>Bank Name</label>
+//            <input type="text" name="bankDetails.bankName" value={formData.bankDetails?.bankName || ""} onChange={handleChange} />
+//          </div>
 
-        <div>
-          <label>Currency</label>
-          <select name="currency" value={formData.currency} onChange={handleChange}>
-            <option value="">Select</option>
-            {currencyList.map(c => <option key={c.code} value={c.code}>{c.code}</option>)}
-          </select>
-        </div>
+//         <div>
+//           <label>Currency</label>
+//           <select name="currency" value={formData.currency} onChange={handleChange}>
+//             <option value="">Select</option>
+//             {currencyList.map(c => <option key={c.code} value={c.code}>{c.code}</option>)}
+//           </select>
+//         </div>
 
-         <div className="form-group">
-          <label>Financial Month</label>
-            <select name="financialYearStart"
-    value={formData.financialYearStart}
-    onChange={handleChange} >
-                 <option value="">Select Year</option>
+//          <div className="form-group">
+//           <label>Financial Month</label>
+//             <select name="financialYearStart"
+//     value={formData.financialYearStart}
+//     onChange={handleChange} >
+//                  <option value="">Select Year</option>
 
-  <option value="2024-2025">2024-2025</option>
-  <option value="2025-2026">2025-2026</option>
-  <option value="2026-2027">2026-2027</option>
-  { !["2024-2025","2025-2026","2026-2027"].includes(formData.financialYearStart) && 
-    <option value={formData.financialYearStart}>{formData.financialYearStart}</option>
-  }
-            </select>
-        </div>
+//   <option value="2024-2025">2024-2025</option>
+//   <option value="2025-2026">2025-2026</option>
+//   <option value="2026-2027">2026-2027</option>
+//   { !["2024-2025","2025-2026","2026-2027"].includes(formData.financialYearStart) && 
+//     <option value={formData.financialYearStart}>{formData.financialYearStart}</option>
+//   }
+//             </select>
+//         </div>
 
 
 
- <div className="form-group">
-           <label>Financial Year </label>
-           <select
-          value={formData.financialYearEnd}
-          name='financialYearEnd'
-    onChange={handleChange}>
+//  <div className="form-group">
+//            <label>Financial Year </label>
+//            <select
+//           value={formData.financialYearEnd}
+//           name='financialYearEnd'
+//     onChange={handleChange}>
 
-            <option value="">select</option>
-            <option value="JAN-DEC">JAN-DEC</option>
-            <option value="MAR-FEB">MAR-FEB</option>
-            <option value="FEB-JAN">FEB-JAN</option>
-            <option value="MAY-APR">MAY-APR </option>
-            <option value="APR-MAR">APR-MAR </option>
-            <option value="JUL-JUN">JUL-JUN </option>
-            <option value="JUN-MAY">JUN-MAY </option>
-            <option value="SEP-AUG">SEP-AUG </option>
-            <option value="AUG-JUL">AUG-JUL </option>
-            <option value="OCT-SEP">OCT-SEP </option>
-            <option value="NOV-OCT">NOV-OCT</option>
-            <option value="DEC-NOV">DEC-NOV</option>
+//             <option value="">select</option>
+//             <option value="JAN-DEC">JAN-DEC</option>
+//             <option value="MAR-FEB">MAR-FEB</option>
+//             <option value="FEB-JAN">FEB-JAN</option>
+//             <option value="MAY-APR">MAY-APR </option>
+//             <option value="APR-MAR">APR-MAR </option>
+//             <option value="JUL-JUN">JUL-JUN </option>
+//             <option value="JUN-MAY">JUN-MAY </option>
+//             <option value="SEP-AUG">SEP-AUG </option>
+//             <option value="AUG-JUL">AUG-JUL </option>
+//             <option value="OCT-SEP">OCT-SEP </option>
+//             <option value="NOV-OCT">NOV-OCT</option>
+//             <option value="DEC-NOV">DEC-NOV</option>
 
-            <option value={formData.financialYearEnd}>{formData.financialYearEnd}</option>
-          </select>
+//             <option value={formData.financialYearEnd}>{formData.financialYearEnd}</option>
+//           </select>
 
-        </div>
+//         </div>
 
 
         
-         <div className="form-group">
-           <label>GST Type</label>
-           <input type="text" name="gstType" value={formData.gstType} onChange={handleChange} />
-         </div>
+//          <div className="form-group">
+//            <label>GST Type</label>
+//            <input type="text" name="gstType" value={formData.gstType} onChange={handleChange} />
+//          </div>
 
-         <div className="form-group">
-          <label>Composition Scheme</label>
-           <input type="checkbox" name="compositionScheme" checked={formData.compositionScheme} onChange={handleChange} />
-         </div>
+//          <div className="form-group">
+//           <label>Composition Scheme</label>
+//            <input type="checkbox" name="compositionScheme" checked={formData.compositionScheme} onChange={handleChange} />
+//          </div>
 
-        <div className="form-group">
-          <label>GST No</label>
-           <select name='gstNo' onChange={handleChange}>
-             <option value="UNREGISTERED">UNREGISTERED</option>
-             <option value="REGISTERED">REGISTERED</option>
-             <option value={formData.gstNo}>{formData.gstNo}</option>
-          </select>
-         </div>
+//         <div className="form-group">
+//           <label>GST No</label>
+//            <select name='gstNo' onChange={handleChange}>
+//              <option value="UNREGISTERED">UNREGISTERED</option>
+//              <option value="REGISTERED">REGISTERED</option>
+//              <option value={formData.gstNo}>{formData.gstNo}</option>
+//           </select>
+//          </div>
 
-         <div className="form-group">
-           <label>PAN No</label>
-           <input type="text" name="panNo" value={formData.panNo} 
-           disabled={formData.gstNo!=="REGISTERED"}
-           onChange={handleChange}/>
-        </div>
-        {/* Files */}
-                <img 
-  src={`${API_URL}/${formData.logoUrl.replace(/\\/g, '/')}`} 
-  alt="Company Logo" />
-        <div>
-          <label>Company Logo</label>
-          <input type="file" name="logoUrl" onChange={handleFileChange} />
-        </div>
+//          <div className="form-group">
+//            <label>PAN No</label>
+//            <input type="text" name="panNo" value={formData.panNo} 
+//            disabled={formData.gstNo!=="REGISTERED"}
+//            onChange={handleChange}/>
+//         </div>
+//         {/* Files */}
+//                 <img 
+//   src={`${API_URL}/${formData.logoUrl.replace(/\\/g, '/')}`} 
+//   alt="Company Logo" />
+//         <div>
+//           <label>Company Logo</label>
+//           <input type="file" name="logoUrl" onChange={handleFileChange} />
+//         </div>
 
-        <div>
-          <label>UPI Loco</label>
-          <input type="file" name="paymentUrl" onChange={handleFileChange} />
-        </div>
+//         <div>
+//           <label>UPI Loco</label>
+//           <input type="file" name="paymentUrl" onChange={handleFileChange} />
+//         </div>
 
-        <img 
-  src={`${API_URL}/${formData.paymentUrl.replace(/\\/g, '/')}`} 
-  alt="Payment QR" />
+//         <img 
+//   src={`${API_URL}/${formData.paymentUrl.replace(/\\/g, '/')}`} 
+//   alt="Payment QR" />
   
-        <div>
-          <label>Extra UPI Loco</label>
-          <input type="file" name="extraPaymentUrl" onChange={handleFileChange} />
-        </div>
+//         <div>
+//           <label>Extra UPI Loco</label>
+//           <input type="file" name="extraPaymentUrl" onChange={handleFileChange} />
+//         </div>
 
-        <button type="submit">Save Settings</button>
+//         <button type="submit">Save Settings</button>
+//       </form>
+//     </div>
+//   );
+
+
+
+return (
+  <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
+
+    <div className="max-w-5xl mx-auto bg-white shadow-xl rounded-xl p-6 md:p-10">
+
+      {/* HEADER */}
+      <h2 className="text-3xl font-bold text-indigo-700 mb-6">
+        Company Settings
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-10">
+
+        {/* ================= BASIC INFO SECTION ================= */}
+        <Section title="Basic Information" color="indigo">
+          <div className="grid md:grid-cols-2 gap-6">
+            <InputField label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} />
+            <InputField label="Contact Person" name="contactPerson" value={formData.contactPerson} onChange={handleChange} />
+            <InputField label="Mobile 1" name="mobile1" value={formData.mobile1} onChange={handleChange} />
+            <InputField label="Mobile 2" name="mobile2" value={formData.mobile2} onChange={handleChange} />
+            <InputField label="Email" type="email" name="email" value={formData.email} onChange={handleChange} />
+            <InputField label="Website" name="website" value={formData.website} onChange={handleChange} />
+            <InputField label="Industry" name="industry" value={formData.industry} onChange={handleChange} />
+          </div>
+        </Section>
+
+        {/* ================= ADDRESS SECTION ================= */}
+        <Section title="Address" color="green">
+          <div className="grid md:grid-cols-2 gap-6">
+            <InputField label="Street" name="address.street" value={formData.address.street} onChange={handleChange} />
+            <InputField label="City" name="address.city" value={formData.address.city} onChange={handleChange} />
+            <InputField label="State" name="address.state" value={formData.address.state} onChange={handleChange} />
+            <InputField label="Pincode" name="address.pincode" value={formData.address.pincode} onChange={handleChange} />
+          </div>
+        </Section>
+
+        {/* ================= BANK SECTION ================= */}
+        <Section title="Bank Details" color="orange">
+          <div className="grid md:grid-cols-2 gap-6">
+            <InputField label="Account Number" name="bankDetails.accountNumber" value={formData.bankDetails.accountNumber} onChange={handleChange} />
+            <InputField label="IFSC" name="bankDetails.ifsc" value={formData.bankDetails.ifsc} onChange={handleChange} />
+            <InputField label="Bank Name" name="bankDetails.bankName" value={formData.bankDetails.bankName} onChange={handleChange} />
+          </div>
+        </Section>
+
+        {/* ================= FINANCIAL SECTION ================= */}
+        <Section title="Financial Details" color="pink">
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {/* CURRENCY */}
+            <div>
+              <label className="form-label">Currency</label>
+              <select name="currency" 
+               className="w-full border border-gray-300 rounded-lg px-3 py-2 shadow-sm bg-whitefocus:outline-nonefocus:ring-2 focus:ring-indigo-300 focus:border-indigo-500transition "
+              value={formData.currency} onChange={handleChange} >
+                <option value="">Select</option>
+                {currencyList.map((c) => (
+                  <option key={c.code} value={c.code}>{c.code}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* FINANCIAL YEAR */}
+            <div>
+              <label className="form-label">Financial Start</label>
+              <select name="financialYearStart" 
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 shadow-sm bg-whitefocus:outline-nonefocus:ring-2 focus:ring-indigo-300 focus:border-indigo-500transition "
+              value={formData.financialYearStart} onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+                <option value="2026-2027">2026-2027</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="form-label">Financial Year Format</label>
+              <select name="financialYearEnd"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 shadow-sm bg-whitefocus:outline-nonefocus:ring-2 focus:ring-indigo-300 focus:border-indigo-500transition "
+               value={formData.financialYearEnd} onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="JAN-DEC">JAN-DEC</option>
+                <option value="APR-MAR">APR-MAR</option>
+                <option value="OCT-SEP">OCT-SEP</option>
+              </select>
+            </div>
+          </div>
+        </Section>
+
+        {/* ================= GST SECTION ================= */}
+        <Section title="GST Information" color="purple">
+          <div className="grid md:grid-cols-2 gap-6">
+
+            <InputField label="GST Type" name="gstType" value={formData.gstType} onChange={handleChange} />
+
+            <div className="flex items-center gap-3 mt-6">
+              <input type="checkbox" name="compositionScheme" checked={formData.compositionScheme} onChange={handleChange} />
+              <label className="text-gray-700">Composition Scheme</label>
+            </div>
+
+            <div>
+              <label className="form-label">GST No</label>
+              <select name="gstNo" 
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 shadow-sm bg-whitefocus:outline-nonefocus:ring-2 focus:ring-indigo-300 focus:border-indigo-500transition "
+               value={formData.gstNo} onChange={handleChange}>
+                <option value="UNREGISTERED">UNREGISTERED</option>
+                <option value="REGISTERED">REGISTERED</option>
+              </select>
+            </div>
+
+            <InputField label="PAN Number" name="panNo" value={formData.panNo} disabled={formData.gstNo !== "REGISTERED"} onChange={handleChange} />
+          </div>
+        </Section>
+
+        {/* ================= FILE UPLOAD ================= */}
+        <Section title="Uploads" color="gray">
+          <div className="grid md:grid-cols-3 gap-6">
+            <UploadField label="Company Logo" name="logoUrl" filePath={formData.logoUrl} onChange={handleFileChange} />
+            <UploadField label="UPI QR" name="paymentUrl" filePath={formData.paymentUrl} onChange={handleFileChange} />
+            <UploadField label="Extra UPI" name="extraPaymentUrl" filePath={formData.extraPaymentUrl} onChange={handleFileChange} />
+          </div>
+        </Section>
+
+        {/* SUBMIT BUTTON */}
+        <button className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white py-3 rounded-lg text-lg shadow">
+          Save Settings
+        </button>
+
       </form>
+    </div>
+  </div>
+);
+
+}
+
+function Section({ title, color, children }) {
+  return (
+    <section>
+      <h3 className={`text-xl font-semibold text-${color}-600 mb-3 border-l-4 border-${color}-500 pl-3`}>
+        {title}
+      </h3>
+      {children}
+    </section>
+  );
+}
+
+
+// function InputField({ label, name, value, onChange, type = "text", disabled }) {
+//   return (
+//     <div>
+//       <label className="form-label">{label}</label>
+//       <input
+//         type={type}
+//         name={name}
+//         disabled={disabled}
+//         value={value || ""}
+//         onChange={onChange}
+//         className="input-box"
+//       />
+//     </div>
+//   );
+// }
+
+
+function InputField({ label, name, value, onChange, type = "text", disabled }) {
+  return (
+    <div className="w-full">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        {label}
+      </label>
+
+      <input
+        type={type}
+        name={name}
+        disabled={disabled}
+        value={value || ""}
+        onChange={onChange}
+        className="
+          w-full 
+          border border-gray-300 
+          rounded-lg 
+          px-3 py-2 
+          shadow-sm 
+          bg-white
+          focus:outline-none
+          focus:ring-2 
+          focus:ring-indigo-300 
+          focus:border-indigo-500
+          transition
+        "
+      />
     </div>
   );
 }
+
+
+function UploadField({ label, name, filePath, onChange }) {
+  return (
+    <div>
+      <label className="form-label">{label}</label>
+
+      {filePath && (
+        <img
+          src={`${API_URL}/${filePath.replace(/\\/g, "/")}`}
+          className="h-24 w-24 object-cover rounded border mb-2"
+        />
+      )}
+
+      <input type="file" name={name} onChange={onChange} className="input-box" />
+    </div>
+  );
+}
+
 
 
 

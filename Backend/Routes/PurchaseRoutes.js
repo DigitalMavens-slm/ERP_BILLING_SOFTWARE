@@ -33,7 +33,7 @@ router.post("/purchases", purchaseController.createPurchase);
 router.get("/purchases", purchaseController.getAllPurchases);
 
 // ✅ Get single purchase
-// router.get("/purchases/:id", purchaseController.getPurchaseById);
+router.get("/purchases/id/:id", purchaseController.getPurchaseById);
 
 // ✅ Search purchase (for frontend suggestions)
 router.get("/purchases/search", purchaseController.searchPurchase);

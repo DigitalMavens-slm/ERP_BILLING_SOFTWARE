@@ -109,6 +109,9 @@ import Report from './Reports/Reports'
 import Mainpage from "./Pages/Mainpage"
 import { Route, Routes } from "react-router-dom"
 import DashBoard from './DashBoard/DashBoard'
+import InvoiceList from "./Invoice/InvoiceList"
+import PurchaseList from './Components/Purchase/PurchaseList'
+import PurchaseLedger from "./Ledger/PurchaseLedger"
 
 function App() {
 
@@ -124,8 +127,10 @@ function App() {
 
           <Route path='dashboard' element={<DashBoard/>}/>
           <Route path="index" element={<Purchase />} />
+          <Route path="purchaselist" element={<PurchaseList/>}/>
+          <Route path='purchaseledger' element={<PurchaseLedger/>}/>
           <Route path="inventory" element={<Inventory />} />
-
+            
           <Route path="setting" element={<Settings />}>
             <Route path="supplier" element={<SupplierForm />} />
             <Route path="customer" element={<CustomerForm />} />
@@ -137,6 +142,7 @@ function App() {
 
           <Route path="company" element={<CompanySettingsForm />} />
           <Route path="invoicecreate" element={<InvoiceApp />} />
+          <Route path='invoicelist' element={<InvoiceList/>}/>
           <Route path="invoice-details" element={<InvoiceDetails />} />
           <Route path="payment-updation" element={<PaymentUpdate />} />
           <Route path="ledger" element={<CustomerLedger />} />

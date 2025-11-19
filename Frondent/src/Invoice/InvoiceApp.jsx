@@ -242,10 +242,9 @@ const selectCustomer = (name) => {
       // 🔹 Save to DB
      const res= await axios.post(`${API_URL}/api/invoices`, invoiceData);
       setCustomerId(customerDetails.customerId);
-        console.log(res)
-        console.log(res.data)
+       console.log(res)
       
-      navigate("/invoice-details", { state: { invoiceData ,customerDetails,} });
+      // navigate("/invoice-details", { state: { invoiceData ,customerDetails,} });
 
 
     } catch (err) {

@@ -4,6 +4,36 @@
 
 
 
+/* .sidebar-btn {
+  @apply flex flex-row items-center justify-between 
+         w-full text-white px-3 py-3 rounded-lg 
+         hover:bg-blue-600 transition cursor-pointer gap-3;
+}
+
+.sidebar-active {
+  @apply bg-blue-500 text-white;
+}
+
+.icon {
+  @apply w-6 h-6;
+} */
+
+.sidebar-btn {
+  @apply flex items-center gap-3 px-4 py-3 text-gray-700 
+         hover:bg-gray-100 cursor-pointer border-l-4 border-transparent;
+}
+
+.sidebar-active {
+  @apply bg-blue-50 border-blue-500 text-blue-700 font-semibold;
+}
+
+.sub-item {
+  @apply flex items-center gap-2 px-10 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer;
+}
+
+
+
+
 .input {
   @apply w-full p-2 border rounded;
 }
@@ -38,3 +68,47 @@
 }
 
 
+
+
+/* INPUT + RIGHT ICON */
+.input-box {
+  position: relative;
+  width: 100%;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px 50px 10px 12px;
+  padding: 8px 3px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.input-icon-right {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  height: 70%;
+  width: 25px;
+  background:white;
+  color: rgb(65, 64, 64);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-radius: 0 3px 3px 0; */
+}
+
+/* COPY BILLING → SHIPPING animation */
+.copy-animate {
+  animation: highlight 0.8s ease-out;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: #b2f5ea;
+  }
+  100% {
+    background-color: transparent;
+  }
+}

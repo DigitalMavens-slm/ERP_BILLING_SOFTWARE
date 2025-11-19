@@ -360,7 +360,7 @@ const getAllPurchases = async (req, res) => {
 const searchPurchase = async (req, res) => {
   try {
     const query = req.query.query?.trim();
-    console.log(query)
+    // console.log(query)
     if (!query) return res.status(400).json({ message: "Query required" });
 
     const purchases = await Purchase.find({
@@ -369,7 +369,7 @@ const searchPurchase = async (req, res) => {
         { supplierName: { $regex: query, $options: "i" } },  // ✅ matches schema
       ],
     }).limit(10);
-
+console.log(purchases)
     if (!purchases || purchases.length === 0) {
       return res.status(404).json({ message: "No purchase found" });
     }
@@ -431,22 +431,23 @@ const createPurchase = async (req, res) => {
 };
 
 // ✅ Get purchase by ID
-// const getPurchaseById = async (req, res) => {
-//   try {
-//     console.log(req.params.id)
-//     const purchase = await Purchase.findById(req.params.id);
-//     if (!purchase)
-//       return res.status(404).json({ success: false, message: "Purchase not found" });
+const getPurchaseById = async (req, res) => {
+  try {
+    console.log(req.params.id)
+    const purchase = await Purchase.findById(req.params.id);
+    if (!purchase)
+      return res.status(404).json({ success: false, message: "Purchase not found" });
 
-//     res.json({ success: true, data: purchase });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: "Failed to fetch purchase",
-//       error: error.message,
-//     });
-//   }
-// };
+    res.json({ success: true, data: purchase });
+    console.log(purchase)
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch purchase",
+      error: error.message,
+    });
+  }
+};
 
 // ✅ Send purchase PDF/email
 const sendPurchase = async (req, res) => {
@@ -478,7 +479,7 @@ const sendPurchase = async (req, res) => {
 module.exports = {
   createPurchase,
   getAllPurchases,
-  // getPurchaseById,
+  getPurchaseById,
   searchPurchase,
   sendPurchase,
 };
