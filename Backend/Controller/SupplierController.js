@@ -37,9 +37,7 @@ exports.deleteSupplier = async (req, res) => {
 // Update supplier
 exports.updateSupplier = async (req, res) => {
   try {
-    const supplier = await Supplier.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const supplier = await Supplier.findByIdAndUpdate(req.params.id, req.body, {new: true,});
     res.json({ message: "Supplier updated", supplier });
   } catch (err) {
     res.status(500).json({ message: err.message });

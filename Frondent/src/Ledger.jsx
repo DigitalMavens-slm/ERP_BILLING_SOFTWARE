@@ -122,6 +122,7 @@ export default function CustomerLedger() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showList, setShowList] = useState(false);
+  console.log(query)
 
   useEffect(() => {
     if (!customerId) return;

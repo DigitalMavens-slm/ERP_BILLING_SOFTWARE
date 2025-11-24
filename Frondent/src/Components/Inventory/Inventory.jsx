@@ -1,108 +1,113 @@
-// Inventory.js
-import React, { useEffect, useState } from "react";
-import Axios from "axios";
-// import "./Inventory.css";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// const API_URL=import.meta.env.VITE_API_URL
 
-const Inventory = () => {
-  const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState({
-    productName: "",
-    sku: "",
-    quantity: 0,
-    minStock: 0,
-    unitPrice: 0
-  });
+// export default function Inventory() {
+//   const [inventory, setInventory] = useState([]);
 
-  const fetchInventory = async () => {
-    const res = await Axios.get("http://localhost:4000/api/inventory");
-    setItems(res.data);
-    checkStockAlert(res.data);
-  };
+//   useEffect(() => {
+//     axios.get(`${API_URL}/api/allinventory`).then((res) => {
+//       console.log(res.data)
+//       setInventory(res.data);
+//     });
+//   }, []);
 
-  const checkStockAlert = (inventory) => {
-    const lowStockItems = inventory.filter((item) => item.quantity<=item.minStock);
+//   return (
+//     <div>
+//       <h2>Stock Items</h2>
+//      <table>
+//       <thead>
+//         <tr>
+//           <td>Product Name</td>  <td>Quantity</td>
+//         </tr>
+//       </thead>
+//       {inventory.map((item) => (
+//         <div className="card" key={item._id}>
+//           <h3>{item.productId}</h3>
+//           {/* <p>Stock: {item.qty}</p> */}
 
-    if (lowStockItems.length > 0) {
-      const names = lowStockItems.map((i) => i.productName).join(", ");
-      alert(`Low Stock Alert: ${names} — Please restock soon!`);
-    }
-  };
+//           {item.qty < item.minQty && (
+//             <>
+//             <tbody>
+//                 <td>{item.productName}</td><td>{item.quantity}</td>
+//             </tbody>
+//             <p style={{ color: "red", fontWeight: "bold" }}>
+//               ⚠ Low Stock — Please Purchase!
+//             </p>
+//             </>
+//           )}
+//         </div>
+//       ))}
+//       </table>
+//     </div>
+//   );
+// }
 
+
+
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+export default function Inventory() {
+  const [inventory, setInventory] = useState([]);
 
   useEffect(() => {
-    fetchInventory();
-    
+    loadInventory();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewItem((prev) => ({ ...prev, [name]: value }));
-    
+  const loadInventory = async () => {
+    const res = await axios.get(`${API_URL}/api/allinventory`);
+    setInventory(res.data);
   };
 
-  const addItem = async () => {
-    await Axios.post("http://localhost:4000/api/inventory", newItem);
-    setNewItem({ productName: "", sku: "", quantity: 0, minStock: 0, unitPrice: 0 });
-    fetchInventory();
-  };
-
-  const deleteItem = async (id) => {
-    await Axios.delete(`http://localhost:4000/api/inventory/${id}`);
-    fetchInventory();
-  };
-
-   
- function Stockalert(){
-   if(newItem.minStock>=10){
-     alert(`${newItem.productName} is minimum stock shoul be less than 20`)
-  }
- }
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Inventory / Stock</h1>
+    <div className="p-6 max-w-5xl mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-6">📦 Inventory Stock</h2>
 
-      <div>
-        <input name="productName" placeholder="Product Name" value={newItem.productName} onChange={handleChange} />
-        <input name="sku" placeholder="SKU" value={newItem.sku} onChange={handleChange} />
-        <input type="number" name="quantity" placeholder="Quantity" value={newItem.quantity} onChange={handleChange} />
-        <input type="number" name="minStock" placeholder="Min Stock" value={newItem.minStock} onChange={handleChange} />
-        <input type="number" name="unitPrice" placeholder="Unit Price" value={newItem.unitPrice} onChange={handleChange} />
-        <button onClick={addItem}>Add Product</button>
-      </div>
-
-      <table border="1" cellPadding="10" style={{ marginTop: "20px", width: "100%" }}>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>SKU</th>
-            <th>Quantity</th>
-            <th>Min Stock</th>
-            <th>Unit Price</th>
-            <th>Last Updated</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item._id}  style={{
-                backgroundColor:
-                  item.quantity <= item.minStock ? "#fff3cd" : "white", // yellow highlight if low
-              }}>
-              <td>{item.productName}</td>
-              <td>{item.sku}</td>
-              <td>{item.quantity}</td>
-              <td>{item.minStock}</td>
-              <td>{item.unitPrice}</td>
-              <td>{new Date(item.lastUpdated).toLocaleDateString()}</td>
-              <td>
-                <button onClick={() => deleteItem(item._id)}>Delete</button>
-              </td>
+      <div className="overflow-x-auto shadow-lg rounded-lg">
+        <table className="min-w-full bg-white border rounded-lg">
+          <thead>
+            <tr className="bg-gray-100 border-b">
+              <th className="py-3 px-4 text-left font-semibold">Product Name</th>
+              <th className="py-3 px-4 text-left font-semibold">Quantity</th>
+              <th className="py-3 px-4 text-left font-semibold">Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {inventory.map((item) => (
+              <tr
+                key={item._id}
+                className="border-b hover:bg-gray-50 transition"
+              >
+                <td className="py-3 px-4 font-medium text-gray-700">
+                  {item?.productName}
+                </td>
+
+                <td className="py-3 px-4 font-semibold">
+                  {item.quantity}
+                </td>
+
+                <td className="py-3 px-4">
+                  {item.qty < item.minQty ? (
+                    <span className="px-3 py-1 text-xs font-bold rounded bg-red-500 text-white">
+                      LOW STOCK
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 text-xs font-boldy rounded bg-green-600 text-white">
+                      IN STOCK
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+      </div>
     </div>
   );
-};
-
-export default Inventory;
+}

@@ -305,6 +305,7 @@
 const mongoose = require("mongoose");
 const Purchase = require("../Model/PurchaseModel");
 const Ledger = require("../Model/LedgerModel");
+const SupplierLedger=require("../Model/SupplierLedgerModel")
 const APIFeatures = require("../Utills/Apifeatures");
 const fs = require("fs");
 const { generatePurchasePDF } = require("../Utills/PdfGenerator");
@@ -397,23 +398,24 @@ const createPurchase = async (req, res) => {
     await newPurchase.save();
 
     // Add ledger entry
-    const lastLedger = await Ledger.findOne({ supplierId: newPurchase.supplierId })
-      .sort({ createdAt: -1 })
-      .lean();
+const lastLedger = await SupplierLedger.findOne({ supplierId: newPurchase.supplierId })
+  .sort({ createdAt: -1 })
+  .lean();
 
-    const prevBalance = lastLedger ? lastLedger.balance : 0;
-    const credit = Number(newPurchase.subtotal || 0);
-    const newBalance = prevBalance + credit;
+const prevBalance = lastLedger ? lastLedger.balance : 0;
+const credit = Number(newPurchase.subtotal || 0);
+const newBalance = prevBalance + credit;
 
-    await Ledger.create({
-      supplierId: newPurchase.supplierId,
-      date: new Date(),
-      particulars: "Purchase Generated",
-      purchaseNo: newPurchase.purchaseNum,
-      debit: 0,
-      credit,
-      balance: newBalance,
-    });
+await SupplierLedger.create({
+  supplierId: newPurchase.supplierId,
+  date: new Date(),
+  particulars: "Purchase Generated",
+  purchaseNo: newPurchase.purchaseNum,
+  debit: 0,
+  credit,
+  balance: newBalance,
+});
+
 
     res.status(201).json({
       success: true,
@@ -433,7 +435,7 @@ const createPurchase = async (req, res) => {
 // ✅ Get purchase by ID
 const getPurchaseById = async (req, res) => {
   try {
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const purchase = await Purchase.findById(req.params.id);
     if (!purchase)
       return res.status(404).json({ success: false, message: "Purchase not found" });

@@ -244,7 +244,7 @@ const selectCustomer = (name) => {
       setCustomerId(customerDetails.customerId);
        console.log(res)
       
-      // navigate("/invoice-details", { state: { invoiceData ,customerDetails,} });
+      navigate("/invoice-details", { state: { invoiceData ,customerDetails,} });
 
 
     } catch (err) {

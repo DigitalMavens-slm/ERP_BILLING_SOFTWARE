@@ -1,4 +1,5 @@
 const Product = require("../Model/ProductFormModel");
+const Inventory=require("../Model/InventoryModel")
 
 exports.getProducts = async (req, res) => {
   try {
@@ -17,8 +18,17 @@ exports.getProducts = async (req, res) => {
 exports.createProduct = async (req, res) => {
   try {
     const data = new Product(req.body);
-    await data.save();
-    res.json(data);
+    const savedProduct=await data.save();
+       await Inventory.create({
+      productId: savedProduct._id,
+      qty: 0,
+      minQty: savedProduct.minOrderQty || 10
+    });
+
+    res.json({
+      message: "Product added + inventory created",
+      product: savedProduct
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

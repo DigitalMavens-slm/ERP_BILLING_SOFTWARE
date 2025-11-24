@@ -410,6 +410,8 @@ const Mainpage = () => {
   const [openPurchase, setOpenPurchase] = useState(false);
   const [openSales, setOpenSales] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openLedger, setOpenLedger] = useState(false);
+
 
   const isActive = (path) => location.pathname.includes(path);
 
@@ -469,7 +471,7 @@ const Mainpage = () => {
             <div className="flex flex-col">
               <Link to="index" className="sub-item"><ChevronRight size={16} /> New Purchase</Link>
               <Link to="purchaselist" className="sub-item"><ChevronRight size={16} /> Purchase List</Link>
-              <Link to="purchaseledger" className="sub-item"><ChevronRight size={16} /> Purchase Return</Link>
+              {/* <Link to="purchaseledger" className="sub-item"><ChevronRight size={16} /> Purchase Return</Link> */}
             </div>
           )}
 
@@ -491,9 +493,13 @@ const Mainpage = () => {
             <div className="flex flex-col">
               <Link to="invoicecreate" className="sub-item"><ChevronRight size={16} /> New Sale</Link>
               <Link to="invoicelist" className="sub-item"><ChevronRight size={16} /> Sales List</Link>
-              <Link to="sales/return" className="sub-item"><ChevronRight size={16} /> Sales Return</Link>
+              {/* <Link to="sales/return" className="sub-item"><ChevronRight size={16}/> Sales Return</Link> */}
             </div>
-          )}
+          )}   
+
+
+        {/* LEDGER MENU */}
+
 
           {/* OTHER STATIC MENU ITEMS */}
           <Link
@@ -524,6 +530,30 @@ const Mainpage = () => {
             <BarChart size={20} /> Reports
           </Link>
 
+<button
+  onClick={() => setOpenLedger(!openLedger)}
+  className={`sidebar-btn w-full justify-between ${
+    openLedger ? "sidebar-active" : ""
+  }`}
+>
+  <span className="flex gap-3">
+    <CreditCard size={20} />
+    Ledger
+  </span>
+  <ChevronDown size={18} />
+</button>
+
+{openLedger && (
+  <div className="flex flex-col">
+    <Link to="ledger" className="sub-item">
+      <ChevronRight size={16} /> Customer Ledger
+    </Link>
+
+    <Link to="purchaseledger" className="sub-item">
+      <ChevronRight size={16} /> Supplier Ledger
+    </Link>
+  </div>
+)}
           <Link
             to="company"
             className={`sidebar-btn ${isActive("company") ? "sidebar-active" : ""}`}

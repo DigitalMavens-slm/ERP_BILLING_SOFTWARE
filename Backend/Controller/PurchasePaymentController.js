@@ -75,20 +75,38 @@ exports.addPurchasePayment = async (req, res) => {
   }
 };
 
-// 🔹 Get payments for one purchase
-exports.getPaymentsByPurchase = async (req, res) => {
+// // 🔹 Get payments for one purchase
+// exports.getPaymentsByPurchase = async (req, res) => {
+//   try {
+//     const { purchaseId } = req.params;
+//     const payments = await PurchasePayment.find({ purchaseId })
+//       .populate("supplierId", "supplierName")
+//       .sort({ createdAt: -1 });
+
+//     res.status(200).json({ success: true, payments });
+//   } catch (error) {
+//     console.error("💥 getPaymentsByPurchase error:", error);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// };
+
+
+// 🔥 Get all payments for a supplier
+exports.getPaymentsBySupplier = async (req, res) => {
   try {
-    const { purchaseId } = req.params;
-    const payments = await PurchasePayment.find({ purchaseId })
-      .populate("supplierId", "supplierName")
+    const supplierId = req.params.supplierId;
+
+    const payments = await PurchasePayment.find({ supplierId })
+      .populate("purchaseId")
       .sort({ createdAt: -1 });
 
-    res.status(200).json({ success: true, payments });
-  } catch (error) {
-    console.error("💥 getPaymentsByPurchase error:", error);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.json({ success: true, payments });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
 };
+
+
 
 // 🔹 Get all purchase payments
 exports.getAllPurchasePayments = async (req, res) => {
