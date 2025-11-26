@@ -11,7 +11,6 @@ const EmployeeRoutes=require("./Routes/EmployeeRoutes")
 const InventoryRoutes=require("./Routes/InventoryRoutes")
 
 const FinanceRoutes=require("./Routes/FinanceRoutes")
-const UsermanagementRoutes=require("./Routes/UsermanagementRoutes")
 
 //       Setting Routes
 const SupplierRoutes=require("./Routes/SupplierRouts")
@@ -48,7 +47,7 @@ app.use("/api",SalesRoutes)
 app.use("/api",EmployeeRoutes)
 app.use("/api",InventoryRoutes)
 app.use("/api",FinanceRoutes)
-app.use("/",UsermanagementRoutes)
+
 
 //   setting use
 app.use("/api",CustomerRoutes)
@@ -78,7 +77,7 @@ app.use("/api",require("./Routes/CustomerRoutes"))
 //         invoice num Genrator routs
 app.use("/api", require("./InvoiceGenrator/InvoiceCounter"));
 
-
+app.use("/api", require("./Routes/checkAuthRoute"))
 
 app.listen(process.env.PORT,()=>{
     console.log(`http://localhost:${process.env.PORT}`);

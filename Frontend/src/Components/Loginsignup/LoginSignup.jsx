@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import Axios from "axios";
+import './LoginSignup.css'
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
-  const [user, setUser] = useState(null);
 
-  const datas = (e) => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "employee",
+    companyCode: "",
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Register User
   const Register = async () => {
-    await Axios.post("http://localhost:4000/api/signup", user, {
-      withCredentials: true,
-    }).then((res) => console.log(res));
-    setState("Login");
+    try {
+      const res = await Axios.post("http://localhost:4000/api/signup", user, {
+        withCredentials: true,
+      });
+      console.log("Registered:", res.data);
+      alert("Account created!");
+      setState("Login");
+    } catch (err) {
+      console.error("Registration Error:", err);
+      alert("Registration failed");
+    }
   };
 
+  // Login User
   const signin = async () => {
     try {
       const response = await Axios.post(
@@ -25,10 +43,8 @@ const LoginSignup = () => {
         { withCredentials: true }
       );
 
-      const token = response.data.token;
-      if (!token) return alert("No token received!");
+      console.log("Token:", response.data.token);
 
-      localStorage.setItem("auth-token", token);
       window.location.replace("/index");
     } catch (err) {
       console.log(err);
@@ -38,48 +54,79 @@ const LoginSignup = () => {
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-indigo-700 p-4">
-      <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-8 w-full max-w-md">
+      <div className="bg-white/90 shadow-2xl rounded-2xl p-8 w-full max-w-md">
+
+        {/* Title */}
         <h1 className="text-3xl font-extrabold text-center mb-6 text-gray-800">
           {state}
         </h1>
 
-     
         <div className="flex flex-col gap-4">
+
+          {/* NAME FIELD (Only in Sign-Up) */}
           {state === "Sign-Up" && (
             <input
               type="text"
               name="name"
-              onChange={datas}
               placeholder="Your Name"
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+              onChange={handleChange}
+              className="input-box"
             />
           )}
 
+          {/* EMAIL */}
           <input
             type="email"
             name="email"
-            onChange={datas}
             placeholder="Email Address"
-            className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+            onChange={handleChange}
+            className="input-box"
           />
 
+          {/* PASSWORD */}
           <input
             type="password"
             name="password"
-            onChange={datas}
             placeholder="Password"
-            className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+            onChange={handleChange}
+            className="input-box"
           />
+
+          {/* ROLE (Only in Sign-Up) */}
+          {state === "Sign-Up" && (
+            <select
+              name="role"
+              value={user.role}
+              onChange={handleChange}
+              className="input-box"
+            >
+              <option value="">Select Role</option>
+              <option value="employee">Employee</option>
+            </select>
+          )}
+
+          {/* COMPANY CODE (Only in Sign-Up) */}
+          {state === "Sign-Up" && (
+            <input
+              type="text"
+              name="companyCode"
+              placeholder="Company Code (Optional)"
+              value={user.companyCode}
+              onChange={handleChange}
+              className="input-box"
+            />
+          )}
         </div>
 
-
+        {/* BUTTON */}
         <button
           onClick={() => (state === "Login" ? signin() : Register())}
-          className="w-full mt-6 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow-md hover:bg-indigo-700 active:scale-95 transition"
+          className="btn-primary"
         >
           Continue
         </button>
 
+        {/* SWITCH STATE */}
         <p className="text-center text-gray-600 mt-4">
           {state === "Sign-Up" ? (
             <>
@@ -104,14 +151,6 @@ const LoginSignup = () => {
           )}
         </p>
 
-        {state === "Sign-Up" && (
-          <div className="flex items-center gap-2 mt-4">
-            <input type="checkbox" />
-            <p className="text-sm text-gray-500">
-              By continuing, I agree to the privacy policy
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

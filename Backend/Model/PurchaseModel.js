@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 // 🔹 Item Schema (for each product line)
 const itemSchema = new mongoose.Schema({
+  
   product: { type: String, required: true },
   qty: { type: Number, required: true },
   mrp: { type: Number, default: 0 },

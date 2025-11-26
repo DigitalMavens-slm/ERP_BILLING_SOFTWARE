@@ -41,7 +41,7 @@ const PurchaseApp = () => {
   const [suppliersList, setSuppliersList] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
-  const [selectedName,setSelectedName]=useState("")
+  const [selectedName,setSelectedName] = useState("")
 
   // 🔹 Product Item
   const [item, setItem] = useState({
@@ -60,7 +60,7 @@ const PurchaseApp = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/products`);
-        // console.log("✅ Products:", res.data);
+        console.log("✅ Products:", res.data);
         setProductsList(res.data);
       } catch (err) {
         console.error("❌ Error fetching products:", err);

@@ -134,215 +134,289 @@ export default function SupplierForm() {
     }
   };
 
-  return (
-    <>
-      {location.pathname === "/setting/supplier" && (
-        <form  onSubmit={handleSubmit} className="supplier-form-wrap">
-          <button onClick={Goback}>back</button>
-          <h2>Supplier Details</h2>
-          <div className="supplier-form">
-            {/* Supplier Name */}
-            <div className="row">
-              <label>Supplier Name *</label>
-              <input
-                value={supplier.name}
-                onChange={handleChange("name")}
-                placeholder="Supplier name"
-              />
-              {errors.name && <div className="error">{errors.name}</div>}
-            </div>
+ return (
+  <>
+    {location.pathname === "/setting/supplier" && (
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md mt-6 border"
+      >
+        <button
+          onClick={Goback}
+          type="button"
+          className="mb-4 text-blue-600 hover:text-blue-800"
+        >
+          ← Back
+        </button>
 
-            {/* Phone */}
-            <div className="row">
-              <label>Phone</label>
-              <input
-                value={supplier.phone}
-                onChange={handleChange("phone")}
-                placeholder="10-13 digits"
-              />
-              {errors.phone && <div className="error">{errors.phone}</div>}
-            </div>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+          Supplier Details
+        </h2>
 
-            {/* Email */}
-            <div className="row">
-              <label>Email</label>
-              <input
-                value={supplier.email}
-                onChange={handleChange("email")}
-                placeholder="example@mail.com"
-              />
-              {errors.email && <div className="error">{errors.email}</div>}
-            </div>
+        <div className="space-y-6">
+          {/* Supplier Name */}
+          <div>
+            <label className="block font-medium mb-1">Supplier Name *</label>
+            <input
+              value={supplier.name}
+              onChange={handleChange("name")}
+              placeholder="Supplier name"
+              className="input-box"
+            />
+            {errors.name && <p className="error-text">{errors.name}</p>}
+          </div>
 
-            {/* GSTIN */}
-            <div className="row">
-              <label>GSTIN</label>
-              <input
-                value={supplier.gstin}
-                onChange={(e) =>
-                  setSupplier((p) => ({ ...p, gstin: e.target.value.toUpperCase() }))
-                }
-                placeholder="GSTIN (15 chars)"
-                maxLength={15}
-              />
-              {errors.gstin && <div className="error">{errors.gstin}</div>}
-              <small className="hint">
-                Format: 2-digit state code + PAN + etc. (15 chars)
-              </small>
-            </div>
+          {/* Phone */}
+          <div>
+            <label className="block font-medium mb-1">Phone</label>
+            <input
+              value={supplier.phone}
+              onChange={handleChange("phone")}
+              placeholder="10-13 digits"
+              className="input-box"
+            />
+            {errors.phone && <p className="error-text">{errors.phone}</p>}
+          </div>
 
-            {/* Billing Address */}
-            <fieldset className="address-block">
-              <legend>Billing Address</legend>
-              <div className="row">
-                <label>Address Line 1 *</label>
+          {/* Email */}
+          <div>
+            <label className="block font-medium mb-1">Email</label>
+            <input
+              value={supplier.email}
+              onChange={handleChange("email")}
+              placeholder="example@mail.com"
+              className="input-box"
+            />
+            {errors.email && <p className="error-text">{errors.email}</p>}
+          </div>
+
+          {/* GSTIN */}
+          <div>
+            <label className="block font-medium mb-1">GSTIN</label>
+            <input
+              value={supplier.gstin}
+              onChange={(e) =>
+                setSupplier((p) => ({ ...p, gstin: e.target.value.toUpperCase() }))
+              }
+              placeholder="GSTIN (15 chars)"
+              maxLength={15}
+              className="input-box"
+            />
+            {errors.gstin && <p className="error-text">{errors.gstin}</p>}
+            <p className="text-sm text-gray-500">
+              Format: 2-digit state code + PAN + etc. (15 chars)
+            </p>
+          </div>
+
+          {/* Billing Address */}
+          <fieldset className="border p-5 rounded-lg">
+            <legend className="text-lg font-semibold">Billing Address</legend>
+
+            <div className="mt-4 space-y-4">
+              <div>
+                <label className="block font-medium mb-1">Address Line 1 *</label>
                 <input
                   value={supplier.billingAddress.line1}
                   onChange={handleChange("billingAddress.line1")}
                   placeholder="Street / building"
+                  className="input-box"
                 />
-                {errors.billingLine1 && <div className="error">{errors.billingLine1}</div>}
+                {errors.billingLine1 && (
+                  <p className="error-text">{errors.billingLine1}</p>
+                )}
               </div>
-              <div className="row">
-                <label>Address Line 2</label>
+
+              <div>
+                <label className="block font-medium mb-1">Address Line 2</label>
                 <input
                   value={supplier.billingAddress.line2}
                   onChange={handleChange("billingAddress.line2")}
-                  placeholder="Area / Landmark"
+                  className="input-box"
                 />
               </div>
-              <div className="row inline">
-                <div style={{ flex: 1 }}>
-                  <label>City *</label>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block font-medium mb-1">City *</label>
                   <input
                     value={supplier.billingAddress.city}
                     onChange={handleChange("billingAddress.city")}
+                    className="input-box"
                   />
-                  {errors.billingCity && <div className="error">{errors.billingCity}</div>}
+                  {errors.billingCity && (
+                    <p className="error-text">{errors.billingCity}</p>
+                  )}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <label>State *</label>
+
+                <div>
+                  <label className="block font-medium mb-1">State *</label>
                   <input
                     value={supplier.billingAddress.state}
                     onChange={handleChange("billingAddress.state")}
+                    className="input-box"
                   />
-                  {errors.billingState && <div className="error">{errors.billingState}</div>}
+                  {errors.billingState && (
+                    <p className="error-text">{errors.billingState}</p>
+                  )}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <label>Pincode *</label>
+
+                <div>
+                  <label className="block font-medium mb-1">Pincode *</label>
                   <input
                     value={supplier.billingAddress.pincode}
                     onChange={handleChange("billingAddress.pincode")}
                     maxLength={6}
+                    className="input-box"
                   />
-                  {errors.billingPincode && <div className="error">{errors.billingPincode}</div>}
+                  {errors.billingPincode && (
+                    <p className="error-text">{errors.billingPincode}</p>
+                  )}
                 </div>
               </div>
-            </fieldset>
-
-            {/* Copy Billing Checkbox */}
-            <div className="copy-row">
-              <label>
-                <input type="checkbox" checked={copyBilling} onChange={toggleCopy} /> Shipping
-                same as billing
-              </label>
             </div>
+          </fieldset>
 
-            {/* Shipping Address */}
-            <fieldset className="address-block">
-              <legend>Shipping Address</legend>
-              <div className="row">
-                <label>Address Line 1 *</label>
+          {/* Copy Billing Checkbox */}
+          <div>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={copyBilling}
+                onChange={toggleCopy}
+                className="h-4 w-4"
+              />
+              <span>Shipping same as billing</span>
+            </label>
+          </div>
+
+          {/* Shipping Address */}
+          <fieldset className="border p-5 rounded-lg">
+            <legend className="text-lg font-semibold">Shipping Address</legend>
+
+            <div className="mt-4 space-y-4">
+              <div>
+                <label className="block font-medium mb-1">Address Line 1 *</label>
                 <input
                   value={supplier.shippingAddress.line1}
                   onChange={handleChange("shippingAddress.line1")}
-                  placeholder="Street / building"
+                  className="input-box"
                   disabled={copyBilling}
                 />
                 {errors.shippingLine1 && (
-                  <div className="error">{errors.shippingLine1}</div>
+                  <p className="error-text">{errors.shippingLine1}</p>
                 )}
               </div>
-              <div className="row">
-                <label>Address Line 2</label>
+
+              <div>
+                <label className="block font-medium mb-1">Address Line 2</label>
                 <input
                   value={supplier.shippingAddress.line2}
                   onChange={handleChange("shippingAddress.line2")}
                   disabled={copyBilling}
+                  className="input-box"
                 />
               </div>
-              <div className="row inline">
-                <div style={{ flex: 1 }}>
-                  <label>City *</label>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block font-medium mb-1">City *</label>
                   <input
                     value={supplier.shippingAddress.city}
                     onChange={handleChange("shippingAddress.city")}
                     disabled={copyBilling}
+                    className="input-box"
                   />
                   {errors.shippingCity && (
-                    <div className="error">{errors.shippingCity}</div>
+                    <p className="error-text">{errors.shippingCity}</p>
                   )}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <label>State *</label>
+
+                <div>
+                  <label className="block font-medium mb-1">State *</label>
                   <input
                     value={supplier.shippingAddress.state}
                     onChange={handleChange("shippingAddress.state")}
                     disabled={copyBilling}
+                    className="input-box"
                   />
                   {errors.shippingState && (
-                    <div className="error">{errors.shippingState}</div>
+                    <p className="error-text">{errors.shippingState}</p>
                   )}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <label>Pincode *</label>
+
+                <div>
+                  <label className="block font-medium mb-1">Pincode *</label>
                   <input
                     value={supplier.shippingAddress.pincode}
                     onChange={handleChange("shippingAddress.pincode")}
                     maxLength={6}
                     disabled={copyBilling}
+                    className="input-box"
                   />
                   {errors.shippingPincode && (
-                    <div className="error">{errors.shippingPincode}</div>
+                    <p className="error-text">{errors.shippingPincode}</p>
                   )}
                 </div>
               </div>
-            </fieldset>
-
-            {/* Submit Button */}
-            <div className="actions">
-              <button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save Supplier"}
-              </button>
             </div>
+          </fieldset>
 
-            {/* Message */}
-            {message && <div className="message">{message}</div>}
+          {/* Submit Button */}
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:bg-blue-400"
+            >
+              {loading ? "Saving..." : "Save Supplier"}
+            </button>
           </div>
-        </form>
-      )}
 
-      <div style={{ marginTop: "20px" }}>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            await ImportExcel("Supplier", file);
-            // fetchBrands(); 
-          }}
+          {message && (
+            <div className="mt-3 text-center text-green-600 font-medium">
+              {message}
+            </div>
+          )}
+        </div>
+      </form>
+    )}
+
+    {/* Import Excel */}
+    <div className="max-w-xl mx-auto mt-6 p-4 bg-white shadow rounded-lg">
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          await ImportExcel("Supplier", file);
+        }}
+        className="space-y-2"
+      >
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          accept=".xlsx, .xls"
+          className="block w-full border p-2 rounded-md"
+        />
+        <button
+          type="submit"
+          disabled={!file}
+          className="btn-green"
         >
-          <input
-            type="file"
-            onChange={(e) => setFile(e.target.files[0])}
-            accept=".xlsx, .xls"
-          />
-          <button type="submit" disabled={!file}>
-            Import Excel
-          </button>
-        </form>
-      </div>
-      <button onClick={()=>ExportExcel("Supplier")}>Export</button>
-    </>
-  );
+          Import Excel
+        </button>
+      </form>
+    </div>
+
+    <div className="max-w-xl mx-auto mt-4">
+      <button
+        onClick={() => ExportExcel("Supplier")}
+        className="btn-blue"
+      >
+        Export
+      </button>
+    </div>
+  </>
+);
+
 }
 
 
