@@ -6,9 +6,11 @@ import { SuggestionProvider } from './Context/SuggestionContext.jsx'
 import { LocationProvider } from './Context/LocationContext.jsx'
 import { KeySuggestionProvider } from './Context/KeyBoardContext.jsx'
 import "./index.css"
+import { AuthProvider } from './Context/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <AuthProvider>
     <BrowserRouter>
     <SuggestionProvider>
       <LocationProvider>
@@ -18,5 +20,6 @@ createRoot(document.getElementById('root')).render(
     </LocationProvider>
     </SuggestionProvider>
     </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )

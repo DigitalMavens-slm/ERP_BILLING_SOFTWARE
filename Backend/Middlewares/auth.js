@@ -6,9 +6,6 @@ module.exports = (req, res, next) => {
       req.cookies["auth-token"] ||
       req.header("Authorization")?.replace("Bearer ", "");
 
-    console.log("Cookies:", req.cookies);
-    console.log("Token received:", token);
-
     if (!token) {
       return res.status(401).json({ message: "Not authorized" });
     }

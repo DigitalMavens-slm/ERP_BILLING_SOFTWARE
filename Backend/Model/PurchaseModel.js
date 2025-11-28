@@ -16,6 +16,11 @@ const itemSchema = new mongoose.Schema({
 // 🔹 Main Purchase Schema
 const purchaseSchema = new mongoose.Schema(
   {
+    companyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      default: null,
+    },
     billNum: { type: String, unique: true },
     date: { type: String, required: true },
     purchaseType: { type: String, default: "Purchase" },

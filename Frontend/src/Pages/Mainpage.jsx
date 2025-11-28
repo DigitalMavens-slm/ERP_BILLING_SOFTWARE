@@ -386,7 +386,6 @@
 
 
 
-
 import React, { useState } from "react";
 import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import {
@@ -405,8 +404,10 @@ import {
   ChevronDown,
   ArrowRight
 } from "lucide-react";
+import { useAuth } from "../Context/AuthContext";
 
 const Mainpage = () => {
+  const { user, company } = useAuth();
   const location = useLocation();
   const [openPurchase, setOpenPurchase] = useState(false);
   const [openSales, setOpenSales] = useState(false);
@@ -415,12 +416,12 @@ const Mainpage = () => {
 
 
   const isActive = (path) => location.pathname.includes(path);
-
+  
   const logout = () => {
   localStorage.removeItem("auth-token");
   window.location.replace("/login");
 };
-   
+
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f7fb]">
 

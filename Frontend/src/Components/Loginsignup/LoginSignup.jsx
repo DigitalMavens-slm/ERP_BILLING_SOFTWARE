@@ -22,10 +22,9 @@ const LoginSignup = () => {
   // Register User
   const Register = async () => {
     try {
-      const res = await Axios.post("http://localhost:4000/api/signup", user, {
+      await Axios.post("http://localhost:4000/api/signup", user, {
         withCredentials: true,
       });
-      console.log("Registered:", res.data);
       alert("Account created!");
       setState("Login");
     } catch (err) {
@@ -37,13 +36,11 @@ const LoginSignup = () => {
   // Login User
   const signin = async () => {
     try {
-      const response = await Axios.post(
+        await Axios.post(
         "http://localhost:4000/api/login",
         user,
         { withCredentials: true }
       );
-
-      console.log("Token:", response.data.token);
 
       window.location.replace("/index");
     } catch (err) {
